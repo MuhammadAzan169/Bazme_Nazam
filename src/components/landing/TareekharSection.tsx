@@ -191,7 +191,7 @@ export function SectionHeader({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="font-etched text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-gold-dim"
+        className="font-etched text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-tertiary-warm"
       >
         {eyebrow}
       </motion.p>

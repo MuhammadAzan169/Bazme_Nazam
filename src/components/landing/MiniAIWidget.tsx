@@ -124,7 +124,7 @@ export default function MiniAIWidget() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 26, stiffness: 200 }}
-              className="fixed z-[290] flex flex-col overflow-hidden border border-gold/15 bg-ink-secondary/95 backdrop-blur-xl shadow-2xl
+              className="fixed z-[290] flex flex-col overflow-hidden border border-gold/15 bg-[hsl(var(--bg-secondary)/0.95)] backdrop-blur-xl shadow-2xl
                 bottom-0 left-0 right-0 h-[60vh] rounded-t-3xl
                 sm:bottom-24 sm:right-5 sm:left-auto sm:h-[520px] sm:w-[380px] sm:rounded-2xl sm:border-gold/20"
             >
@@ -170,7 +170,7 @@ export default function MiniAIWidget() {
                       "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-[1.6] " +
                       (m.role === "user"
                         ? "ml-auto bg-gold/15 text-foreground border border-gold/20"
-                        : "bg-ink-tertiary/70 border border-gold/10 text-secondary-warm")
+                        : "bg-[hsl(var(--bg-tertiary)/0.7)] border border-gold/10 text-secondary-warm")
                     }
                   >
                     {m.text}
@@ -221,7 +221,7 @@ export default function MiniAIWidget() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Apni baat likhein…"
-                  className="flex-1 rounded-full border border-gold/15 bg-ink-primary/60 px-4 py-2.5 text-sm text-foreground placeholder:text-tertiary-warm focus:border-gold/40 outline-none"
+                  className="flex-1 rounded-full border border-gold/15 bg-[hsl(var(--bg-primary)/0.6)] px-4 py-2.5 text-sm text-foreground placeholder:text-tertiary-warm focus:border-gold/40 outline-none"
                 />
                 <button
                   type="submit"

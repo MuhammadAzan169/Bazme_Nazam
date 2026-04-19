@@ -212,7 +212,7 @@ export const POETS: Poet[] = [
     knownFor: "Six Divans, mastery of rekhta, raw emotional authenticity",
     sher: ["مجھ کو شاعر نہ کہو میر کہ صاحب میں نے", "درد و غم کتنے کیے جمع تو دیوان کیا"],
     imgColor: "linear-gradient(135deg, #1A1A2E, #C9667A15)",
-    wikiImg: null,
+    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Mir_Taqi_Mir.jpg/440px-Mir_Taqi_Mir.jpg",
     fallbackLetter: "م",
   },
   {
@@ -253,7 +253,7 @@ export const POETS: Poet[] = [
     knownFor: "Tanha Tanha, Dard Aashob, exile and defiance",
     sher: ["رنجش ہی سہی دل ہی دکھانے کے لیے آ", "آ پھر سے مجھے چھوڑ کے جانے کے لیے آ"],
     imgColor: "linear-gradient(135deg, #1E1030, #E8778A15)",
-    wikiImg: null,
+    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Ahmad_Faraz.jpg/440px-Ahmad_Faraz.jpg",
     fallbackLetter: "ف",
   },
   {
@@ -280,7 +280,7 @@ export const POETS: Poet[] = [
     knownFor: "Shayad, Yaani, Lekin, Goya",
     sher: ["میں نے بہت کھویا ہے اپنے آپ کو پانے میں", "اور جو پایا وہ بھی کھو دیا دیوانے میں"],
     imgColor: "linear-gradient(135deg, #0A0A20, #6B5BD618)",
-    wikiImg: null,
+    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Jaun_Elia.jpg/440px-Jaun_Elia.jpg",
     fallbackLetter: "ج",
   },
   {
@@ -293,7 +293,7 @@ export const POETS: Poet[] = [
     knownFor: "Talkhiyan, 700+ Bollywood songs, Pyaasa, Kabhi Kabhi",
     sher: ["وہ صبح کبھی تو آئے گی", "اے ارض وطن تجھ کو کیا ہو گیا"],
     imgColor: "linear-gradient(135deg, #1A1000, #F5C84215)",
-    wikiImg: null,
+    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Sahir_Ludhianvi.jpg/440px-Sahir_Ludhianvi.jpg",
     fallbackLetter: "س",
   },
 ];
@@ -311,6 +311,7 @@ export interface Book {
   description: string;
   themes: string[];
   cover: string;
+  coverImg: string | null;
   iconicLine: string;
 }
 
@@ -328,6 +329,7 @@ export const BOOKS: Book[] = [
       "A spiritual journey of two souls — Imama and Salar — whose lives collide through faith, rebellion, and the search for a perfect guide. One of the bestselling Urdu novels of the 21st century.",
     themes: ["Faith", "Redemption", "Love", "Identity"],
     cover: "linear-gradient(135deg, #1a0a2e, #4a2060)",
+    coverImg: "https://covers.openlibrary.org/b/isbn/9789690023414-L.jpg?default=false",
     iconicLine: "انسان کی سب سے بڑی غلطی یہ ہے کہ وہ خدا کو بھول جاتا ہے",
   },
   {
@@ -343,6 +345,7 @@ export const BOOKS: Book[] = [
       "A deeply moving account of the afterlife through the lens of Islamic belief. Philosophical depth meets extraordinary narrative clarity — a contemporary phenomenon.",
     themes: ["Afterlife", "Faith", "Accountability", "Hope"],
     cover: "linear-gradient(135deg, #0a1a2e, #1a4060)",
+    coverImg: null,
     iconicLine: "موت زندگی کا انت نہیں، بلکہ اصل زندگی کا آغاز ہے",
   },
   {
@@ -358,6 +361,7 @@ export const BOOKS: Book[] = [
       "The first great Urdu novel. A courtesan's life in Lucknow's twilight years — lush, melancholic, feminist before the word existed.",
     themes: ["Fate", "Womanhood", "Loss", "Lucknow culture"],
     cover: "linear-gradient(135deg, #2a1000, #6a3000)",
+    coverImg: "https://covers.openlibrary.org/b/isbn/969350674X-L.jpg?default=false",
     iconicLine: "میری زندگی ایک ایسی کتاب ہے جسے لکھنے والے نے خود نہیں پڑھا",
   },
   {
@@ -373,6 +377,7 @@ export const BOOKS: Book[] = [
       "A metaphysical masterwork. The vulture as a symbol of forbidden desire — philosophy, psychology, and mysticism woven together unlike anything else in Urdu literature.",
     themes: ["Forbidden desire", "Metaphysics", "Sufism"],
     cover: "linear-gradient(135deg, #1a2a0a, #3a4a1a)",
+    coverImg: null,
     iconicLine: "جب انسان حرام کی طرف قدم بڑھاتا ہے تو اندر سے گدھ بن جاتا ہے",
   },
   {
@@ -388,6 +393,7 @@ export const BOOKS: Book[] = [
       "The most studied, debated, and beloved poetry collection in Urdu literature. 234 ghazals containing multitudes — philosophy, desire, wit, tragedy — compressed into two lines each.",
     themes: ["Ghazal", "Philosophy", "Mystic thought"],
     cover: "linear-gradient(135deg, #2A1845, #E8B45A22)",
+    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mirza_Asadullah_Khan_Ghalib.jpg/440px-Mirza_Asadullah_Khan_Ghalib.jpg",
     iconicLine: "ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے",
   },
   {
@@ -403,6 +409,7 @@ export const BOOKS: Book[] = [
       "Iqbal's first Urdu collection — containing Shikwa, Jawab-e-Shikwa, Tarana-e-Hindi, and dozens of poems that shaped national consciousness across South Asia.",
     themes: ["Khudi", "Islamic revival", "Awakening"],
     cover: "linear-gradient(135deg, #0D2340, #D49A3E22)",
+    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Allama_Iqbal.jpg/440px-Allama_Iqbal.jpg",
     iconicLine: "لب پہ آتی ہے دعا بن کے تمنا میری",
   },
   {
@@ -418,6 +425,7 @@ export const BOOKS: Book[] = [
       "Parveen Shakir's debut that changed Urdu poetry forever. The female experience — desire, longing, identity — written with a directness previous poets had avoided.",
     themes: ["Feminine voice", "Longing", "Urban life"],
     cover: "linear-gradient(135deg, #2E0A1A, #E8778A22)",
+    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Parveen_Shakir.jpg/440px-Parveen_Shakir.jpg",
     iconicLine: "خوشبو کی طرح پھیل گئی ہے میری محبت",
   },
   {
@@ -433,6 +441,7 @@ export const BOOKS: Book[] = [
       "Manto ripped the curtain from Partition violence and hypocrisy. Tried for obscenity six times, acquitted each time. Toba Tek Singh, Khol Do — wounds that heal by hurting.",
     themes: ["Partition", "Human condition", "Colonial violence"],
     cover: "linear-gradient(135deg, #2a0a0a, #5a1a1a)",
+    coverImg: null,
     iconicLine: "اگر آپ میری کہانیاں نہیں سہہ سکتے تو زمانہ ناقابلِ برداشت ہے",
   },
   {
@@ -448,6 +457,7 @@ export const BOOKS: Book[] = [
       "Shikwa is a Muslim's complaint to God — bold, almost sacrilegious, devastating in its honesty. Jawab-e-Shikwa is God's reply. Together, one of the great dialogues in world literature.",
     themes: ["Theology", "Divine dialogue", "Khudi"],
     cover: "linear-gradient(135deg, #0D2340, #A87A3022)",
+    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Allama_Iqbal.jpg/440px-Allama_Iqbal.jpg",
     iconicLine: "تجھے یاد ہو کہ نہ یاد ہو، مجھے یاد ہے",
   },
 ];

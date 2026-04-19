@@ -357,3 +357,48 @@
     transition-duration: 0.1ms !important;
   }
 }
+
+/* ─── GPU promotion for backdrop-blur elements ────────────── */
+/* Prevents late GPU layer creation flashes on scroll */
+[class*="backdrop-blur"],
+.glass,
+.glass-strong,
+.glass-navbar {
+  will-change: backdrop-filter;
+  transform: translateZ(0);
+}
+
+/* ─── Shimmer text effect ─────────────────────────────────── */
+.shimmer-gold {
+  background-image: linear-gradient(
+    90deg,
+    hsl(var(--gold-dim)),
+    hsl(var(--gold-bright)),
+    hsl(var(--gold-dim))
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmerSweep 2.4s linear infinite;
+}
+
+/* ─── Custom cursor override — hide native cursor ─────────── */
+@media (pointer: fine) {
+  html, body { cursor: none !important; }
+  a, button, [role="button"], input, textarea, select, .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
+/* ─── Image skeleton placeholder ──────────────────────────── */
+.img-skeleton {
+  background: linear-gradient(
+    110deg,
+    hsl(var(--bg-secondary)) 8%,
+    hsl(var(--bg-tertiary)) 18%,
+    hsl(var(--bg-secondary)) 33%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSweep 1.6s linear infinite;
+}

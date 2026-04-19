@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Feather, Info, Menu, Plus, Send, Sparkles, Trash2, X } from "lucide-react";
+import { Feather, Info, Menu, Plus, Send, Sparkles, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "@/store/useStore";
 import Navbar from "@/components/shared/Navbar";
@@ -87,82 +87,106 @@ export default function ChatbotPage() {
       <Navbar variant="chatbot" />
 
       <div className="relative z-10 flex flex-1 overflow-hidden pt-16 sm:pt-20">
-        {/* Sidebar */}
-        <AnimatePresence>
-          {(sidebarOpen || typeof window !== "undefined") && (
-            <motion.aside
-              key="sidebar"
-              initial={{ x: -300 }}
-              animate={{ x: sidebarOpen ? 0 : -300 }}
-              transition={{ type: "spring", damping: 28, stiffness: 220 }}
-              className="fixed inset-y-0 left-0 z-[250] w-[85vw] max-w-[300px] border-r border-gold/15 bg-ink-secondary/95 backdrop-blur-xl pt-20 lg:relative lg:translate-x-0 lg:w-[280px] lg:flex-shrink-0 lg:bg-transparent lg:backdrop-blur-none"
-              style={{
-                transform:
-                  typeof window !== "undefined" && window.innerWidth >= 1024
-                    ? "translateX(0)"
-                    : undefined,
-              }}
+        {/* Sidebar — always visible on lg+, slide-in on mobile */}
+        <aside
+          className={
+            "hidden lg:flex fixed inset-y-0 left-0 z-[250] w-[280px] flex-shrink-0 border-r border-gold/15 pt-20 lg:relative lg:border-r-0"
+          }
+        >
+          <div className="flex h-full w-full flex-col px-4 pb-4">
+            <div className="flex items-center justify-between mb-4">
+              <p className="font-etched text-[10px] tracking-[0.18em] uppercase text-tertiary-warm">
+                Mehfil
+              </p>
+            </div>
+
+            <button
+              onClick={() => clearChat()}
+              className="btn-gold w-full px-4 py-2.5 text-[12px] flex items-center justify-center gap-2 mb-4"
             >
-              <div className="flex h-full flex-col px-4 pb-4">
-                <div className="flex items-center justify-between mb-4">
-                  <p className="font-etched text-[10px] tracking-[0.18em] uppercase text-gold-dim">
-                    Mehfil
-                  </p>
-                  <button
-                    onClick={() => setSidebarOpen(false)}
-                    className="lg:hidden rounded-md p-1.5 text-secondary-warm"
-                    aria-label="Close sidebar"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
+              <Plus size={14} /> Nayi Mehfil
+            </button>
 
+            <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2 px-1">
+              Quick Prompts
+            </p>
+            <div className="flex-1 space-y-1.5 overflow-y-auto">
+              {QUICK_PROMPTS.map((q) => (
                 <button
-                  onClick={() => clearChat()}
-                  className="btn-gold w-full px-4 py-2.5 text-[12px] flex items-center justify-center gap-2 mb-4"
+                  key={q}
+                  onClick={() => send(q)}
+                  className="w-full rounded-md border border-gold/10 bg-gold/[0.03] px-3 py-2 text-left font-classical italic text-[12.5px] text-secondary-warm hover:bg-gold/[0.08] hover:text-gold transition-colors"
                 >
-                  <Plus size={14} /> Nayi Mehfil
+                  {q}
                 </button>
+              ))}
+            </div>
+          </div>
+        </aside>
 
-                <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2 px-1">
-                  Quick Prompts
-                </p>
-                <div className="flex-1 space-y-1.5 overflow-y-auto">
-                  {QUICK_PROMPTS.map((q) => (
+        {/* Mobile sidebar overlay */}
+        <AnimatePresence>
+          {sidebarOpen && (
+            <>
+              <motion.div
+                key="sidebar-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSidebarOpen(false)}
+                className="fixed inset-0 z-[240] bg-black/50 lg:hidden"
+              />
+              <motion.aside
+                key="sidebar-mobile"
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", damping: 28, stiffness: 220 }}
+                className="fixed inset-y-0 left-0 z-[250] w-[85vw] max-w-[300px] border-r border-gold/15 bg-[hsl(var(--bg-secondary)/0.95)] backdrop-blur-xl pt-20 lg:hidden"
+              >
+                <div className="flex h-full flex-col px-4 pb-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="font-etched text-[10px] tracking-[0.18em] uppercase text-tertiary-warm">
+                      Mehfil
+                    </p>
                     <button
-                      key={q}
-                      onClick={() => {
-                        send(q);
-                        setSidebarOpen(false);
-                      }}
-                      className="w-full rounded-md border border-gold/10 bg-gold/[0.03] px-3 py-2 text-left font-classical italic text-[12.5px] text-secondary-warm hover:bg-gold/[0.08] hover:text-gold transition-colors"
+                      onClick={() => setSidebarOpen(false)}
+                      className="rounded-md p-1.5 text-secondary-warm"
+                      aria-label="Close sidebar"
                     >
-                      {q}
+                      <X size={16} />
                     </button>
-                  ))}
-                </div>
+                  </div>
 
-                {messages.length > 0 && (
                   <button
                     onClick={() => clearChat()}
-                    className="mt-3 inline-flex items-center justify-center gap-2 rounded-md border border-rose/20 px-3 py-2 font-etched text-[10px] tracking-[0.16em] uppercase text-rose hover:bg-rose/10 transition-colors"
+                    className="btn-gold w-full px-4 py-2.5 text-[12px] flex items-center justify-center gap-2 mb-4"
                   >
-                    <Trash2 size={12} /> Saaf Karein
+                    <Plus size={14} /> Nayi Mehfil
                   </button>
-                )}
-              </div>
-            </motion.aside>
+
+                  <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2 px-1">
+                    Quick Prompts
+                  </p>
+                  <div className="flex-1 space-y-1.5 overflow-y-auto">
+                    {QUICK_PROMPTS.map((q) => (
+                      <button
+                        key={q}
+                        onClick={() => {
+                          send(q);
+                          setSidebarOpen(false);
+                        }}
+                        className="w-full rounded-md border border-gold/10 bg-gold/[0.03] px-3 py-2 text-left font-classical italic text-[12.5px] text-secondary-warm hover:bg-gold/[0.08] hover:text-gold transition-colors"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.aside>
+            </>
           )}
         </AnimatePresence>
-
-        {sidebarOpen && (
-          <button
-            aria-hidden
-            tabIndex={-1}
-            onClick={() => setSidebarOpen(false)}
-            className="fixed inset-0 z-[240] bg-black/50 lg:hidden"
-          />
-        )}
 
         {/* Chat area */}
         <main className="relative flex flex-1 flex-col overflow-hidden">
@@ -261,18 +285,7 @@ export default function ChatbotPage() {
               {thinking && (
                 <div className="flex items-center gap-2 px-4 py-3">
                   <Sparkles size={14} className="text-gold animate-pulse" />
-                  <span
-                    className="font-classical italic text-gold/80"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(90deg, hsl(var(--gold-dim)), hsl(var(--gold-bright)), hsl(var(--gold-dim)))",
-                      backgroundSize: "200% 100%",
-                      WebkitBackgroundClip: "text",
-                      backgroundClip: "text",
-                      color: "transparent",
-                      animation: "shimmerSweep 2.4s linear infinite",
-                    }}
-                  >
+                  <span className="font-classical italic shimmer-gold">
                     Soch raha hoon…
                   </span>
                 </div>
@@ -300,7 +313,7 @@ export default function ChatbotPage() {
                 }}
                 rows={1}
                 placeholder="Apni baat likhein… (Enter to send)"
-                className="flex-1 resize-none rounded-2xl border border-gold/15 bg-ink-primary/60 px-4 py-3 text-sm text-foreground placeholder:text-tertiary-warm focus:border-gold/40 outline-none min-h-[48px] max-h-[160px]"
+                className="flex-1 resize-none rounded-2xl border border-gold/15 bg-[hsl(var(--bg-primary)/0.6)] px-4 py-3 text-sm text-foreground placeholder:text-tertiary-warm focus:border-gold/40 outline-none min-h-[48px] max-h-[160px]"
               />
               <button
                 type="submit"
@@ -314,85 +327,141 @@ export default function ChatbotPage() {
           </form>
         </main>
 
-        {/* Context panel */}
-        <AnimatePresence>
-          {(contextOpen || true) && (
-            <motion.aside
-              key="ctx"
-              initial={{ x: 320 }}
-              animate={{ x: contextOpen ? 0 : 320 }}
-              transition={{ type: "spring", damping: 28, stiffness: 220 }}
-              className="fixed inset-y-0 right-0 z-[250] w-[85vw] max-w-[320px] border-l border-gold/15 bg-ink-secondary/95 backdrop-blur-xl pt-20 lg:relative lg:translate-x-0 lg:w-[300px] lg:flex-shrink-0 lg:bg-transparent lg:backdrop-blur-none"
+        {/* Context panel — always visible on lg+, slide-in on mobile */}
+        <aside className="hidden lg:flex w-[300px] flex-shrink-0 border-l border-gold/15 pt-0">
+          <div className="flex h-full w-full flex-col px-5 pb-5 overflow-y-auto">
+            <div className="mb-4 pt-1">
+              <p className="font-etched text-[10px] tracking-[0.18em] uppercase text-tertiary-warm">
+                Maloomat
+              </p>
+            </div>
+
+            <div
+              className="glass rounded-xl p-4 mb-4"
+              style={{ borderRadius: "var(--r-md)" }}
             >
-              <div className="flex h-full flex-col px-5 pb-5 overflow-y-auto">
-                <div className="flex items-center justify-between mb-4">
-                  <p className="font-etched text-[10px] tracking-[0.18em] uppercase text-gold-dim">
-                    Maloomat
-                  </p>
-                  <button
-                    onClick={() => setContextOpen(false)}
-                    className="lg:hidden rounded-md p-1.5 text-secondary-warm"
-                    aria-label="Close info"
+              <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
+                Aaj ki Kaifiyat
+              </p>
+              <MoodPicker compact />
+              <p className="font-classical italic text-secondary-warm text-xs mt-3">
+                Mood:{" "}
+                <span className="text-gold">{MOODS[mood].labelEn}</span> —
+                Bazm aapke mood ke mutabiq jawab dene ki koshish karega.
+              </p>
+            </div>
+
+            <div
+              className="glass p-4 mb-4"
+              style={{ borderRadius: "var(--r-md)" }}
+            >
+              <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
+                Kya Kar Sakte Hain?
+              </p>
+              <ul className="space-y-1.5 text-[12px] font-classical italic text-secondary-warm leading-relaxed">
+                <li>• Kisi shayar par tafseel</li>
+                <li>• Ghazal, nazm, marsiya samjhayein</li>
+                <li>• Mood ke mutabiq sher</li>
+                <li>• Novel ya afsana ki sifarish</li>
+                <li>• Tareekh-e-adab par sawal</li>
+              </ul>
+            </div>
+
+            <div
+              className="glass p-4"
+              style={{ borderRadius: "var(--r-md)" }}
+            >
+              <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
+                Note
+              </p>
+              <p className="text-[12px] font-classical italic text-secondary-warm leading-relaxed">
+                Ye preview demo hai — abhi mock replies chal rahe hain. Real AI ke liye Lovable Cloud + AI Gateway connect ki ja sakti hai.
+              </p>
+            </div>
+          </div>
+        </aside>
+
+        {/* Mobile context panel */}
+        <AnimatePresence>
+          {contextOpen && (
+            <>
+              <motion.div
+                key="ctx-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setContextOpen(false)}
+                className="fixed inset-0 z-[240] bg-black/50 lg:hidden"
+              />
+              <motion.aside
+                key="ctx-mobile"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", damping: 28, stiffness: 220 }}
+                className="fixed inset-y-0 right-0 z-[250] w-[85vw] max-w-[320px] border-l border-gold/15 bg-[hsl(var(--bg-secondary)/0.95)] backdrop-blur-xl pt-20 lg:hidden"
+              >
+                <div className="flex h-full flex-col px-5 pb-5 overflow-y-auto">
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="font-etched text-[10px] tracking-[0.18em] uppercase text-tertiary-warm">
+                      Maloomat
+                    </p>
+                    <button
+                      onClick={() => setContextOpen(false)}
+                      className="rounded-md p-1.5 text-secondary-warm"
+                      aria-label="Close info"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+
+                  <div
+                    className="glass rounded-xl p-4 mb-4"
+                    style={{ borderRadius: "var(--r-md)" }}
                   >
-                    <X size={16} />
-                  </button>
-                </div>
+                    <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
+                      Aaj ki Kaifiyat
+                    </p>
+                    <MoodPicker compact />
+                    <p className="font-classical italic text-secondary-warm text-xs mt-3">
+                      Mood:{" "}
+                      <span className="text-gold">{MOODS[mood].labelEn}</span> —
+                      Bazm aapke mood ke mutabiq jawab dene ki koshish karega.
+                    </p>
+                  </div>
 
-                <div
-                  className="glass rounded-xl p-4 mb-4"
-                  style={{ borderRadius: "var(--r-md)" }}
-                >
-                  <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
-                    Aaj ki Kaifiyat
-                  </p>
-                  <MoodPicker compact />
-                  <p className="font-classical italic text-secondary-warm text-xs mt-3">
-                    Mood:{" "}
-                    <span className="text-gold">{MOODS[mood].labelEn}</span> —
-                    Bazm aapke mood ke mutabiq jawab dene ki koshish karega.
-                  </p>
-                </div>
+                  <div
+                    className="glass p-4 mb-4"
+                    style={{ borderRadius: "var(--r-md)" }}
+                  >
+                    <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
+                      Kya Kar Sakte Hain?
+                    </p>
+                    <ul className="space-y-1.5 text-[12px] font-classical italic text-secondary-warm leading-relaxed">
+                      <li>• Kisi shayar par tafseel</li>
+                      <li>• Ghazal, nazm, marsiya samjhayein</li>
+                      <li>• Mood ke mutabiq sher</li>
+                      <li>• Novel ya afsana ki sifarish</li>
+                      <li>• Tareekh-e-adab par sawal</li>
+                    </ul>
+                  </div>
 
-                <div
-                  className="glass p-4 mb-4"
-                  style={{ borderRadius: "var(--r-md)" }}
-                >
-                  <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
-                    Kya Kar Sakte Hain?
-                  </p>
-                  <ul className="space-y-1.5 text-[12px] font-classical italic text-secondary-warm leading-relaxed">
-                    <li>• Kisi shayar par tafseel</li>
-                    <li>• Ghazal, nazm, marsiya samjhayein</li>
-                    <li>• Mood ke mutabiq sher</li>
-                    <li>• Novel ya afsana ki sifarish</li>
-                    <li>• Tareekh-e-adab par sawal</li>
-                  </ul>
+                  <div
+                    className="glass p-4"
+                    style={{ borderRadius: "var(--r-md)" }}
+                  >
+                    <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
+                      Note
+                    </p>
+                    <p className="text-[12px] font-classical italic text-secondary-warm leading-relaxed">
+                      Ye preview demo hai — abhi mock replies chal rahe hain. Real AI ke liye Lovable Cloud + AI Gateway connect ki ja sakti hai.
+                    </p>
+                  </div>
                 </div>
-
-                <div
-                  className="glass p-4"
-                  style={{ borderRadius: "var(--r-md)" }}
-                >
-                  <p className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm mb-2">
-                    Note
-                  </p>
-                  <p className="text-[12px] font-classical italic text-secondary-warm leading-relaxed">
-                    Ye preview demo hai — abhi mock replies chal rahe hain. Real AI ke liye Lovable Cloud + AI Gateway connect ki ja sakti hai.
-                  </p>
-                </div>
-              </div>
-            </motion.aside>
+              </motion.aside>
+            </>
           )}
         </AnimatePresence>
-
-        {contextOpen && (
-          <button
-            aria-hidden
-            tabIndex={-1}
-            onClick={() => setContextOpen(false)}
-            className="fixed inset-0 z-[240] bg-black/50 lg:hidden"
-          />
-        )}
       </div>
     </div>
   );

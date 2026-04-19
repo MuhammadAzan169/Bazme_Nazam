@@ -71,13 +71,14 @@ export default function MoodPicker({ compact, showImages }: Props) {
               >
                 {/* Image */}
                 <div
-                  className="relative h-28 w-full overflow-hidden sm:h-36"
+                  className="relative h-28 w-full overflow-hidden sm:h-36 img-skeleton"
                   style={{ borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}
                 >
                   <img
                     src={m.image}
                     alt={`${m.labelEn} mood — ${m.meaning}`}
                     loading="lazy"
+                    decoding="async"
                     width={1024}
                     height={1024}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"

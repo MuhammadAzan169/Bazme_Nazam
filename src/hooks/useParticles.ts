@@ -3,11 +3,15 @@ import { useEffect, useRef } from "react";
 /**
  * Subtle particle system — gold/rose dust drifting across a canvas.
  * Atmospheric only. Max opacity per particle: 0.22.
+ * Respects prefers-reduced-motion.
  */
 export function useParticles(canvasRef: React.RefObject<HTMLCanvasElement>) {
   const animRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Respect reduced-motion preference
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -20,7 +24,8 @@ export function useParticles(canvasRef: React.RefObject<HTMLCanvasElement>) {
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
-      ctx.scale(dpr, dpr);
+      // Use setTransform instead of scale to prevent accumulation
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener("resize", resize);

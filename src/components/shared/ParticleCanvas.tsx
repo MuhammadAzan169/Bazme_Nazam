@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParticles } from "@/hooks/useParticles";
 
 interface Props {
@@ -7,13 +7,16 @@ interface Props {
 
 export default function ParticleCanvas({ className }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
   useParticles(ref);
 
-  // Hide for reduced-motion users
-  const reducedMotion = useRef(false);
-  useEffect(() => {
-    reducedMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }, []);
+  // Don't render canvas at all for reduced-motion users
+  if (reducedMotion) return null;
 
   return (
     <canvas

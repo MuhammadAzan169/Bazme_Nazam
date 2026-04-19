@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import CalligraphyBg from "@/components/shared/CalligraphyBg";
 import { MOODS, useStore } from "@/store/useStore";
+import { ERAS, POETS, BOOKS } from "@/data/literature";
 import heroImg from "@/assets/hero-mushaira.jpg";
 
 const ROTATING = [
@@ -33,6 +34,7 @@ export default function HeroSection() {
           alt=""
           width={1920}
           height={1080}
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover opacity-40"
           style={{ filter: "saturate(0.85) contrast(1.05)" }}
         />
@@ -137,8 +139,8 @@ export default function HeroSection() {
         >
           {[
             { n: "1200+", l: "Years of Adab", u: "سال" },
-            { n: "8", l: "Featured Shuara", u: "شعراء" },
-            { n: "9", l: "Iconic Books", u: "کتب" },
+            { n: String(POETS.length), l: "Featured Shuara", u: "شعراء" },
+            { n: String(BOOKS.length), l: "Iconic Books", u: "کتب" },
           ].map(({ n, l, u }) => (
             <div
               key={l}

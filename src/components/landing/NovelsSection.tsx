@@ -1,16 +1,17 @@
 import { motion } from "framer-motion";
-import { BookOpen } from "lucide-react";
+import { useState } from "react";
 import { BOOKS, type Book } from "@/data/literature";
 import { SectionHeader } from "./TareekharSection";
 
-const GENRE_BORDER: Record<Book["genre"], string> = {
-  Novel: "border-rose/40",
-  "Poetry Collection": "border-gold/40",
-  "Short Stories": "border-indigo/40",
-  "Long Poem": "border-gold/40",
+const GENRE_COLOR: Record<Book["genre"], string> = {
+  Novel: "border-accent",
+  "Poetry Collection": "border-gold",
+  "Short Stories": "border-indigo",
+  "Long Poem": "border-gold",
 };
 
 function BookCard({ book, index }: { book: Book; index: number }) {
+  const [imgError, setImgError] = useState(false);
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
@@ -20,23 +21,56 @@ function BookCard({ book, index }: { book: Book; index: number }) {
       whileHover={{ y: -6 }}
       className={
         "glass glass-hover overflow-hidden flex flex-col sm:flex-row gap-0 border-l-2 " +
-        GENRE_BORDER[book.genre]
+        GENRE_COLOR[book.genre]
       }
       style={{ borderRadius: "var(--r-lg)" }}
     >
       {/* Cover */}
       <div
-        className="relative w-full sm:w-[180px] flex-shrink-0 flex items-center justify-center p-6 min-h-[180px]"
+        className="relative w-full sm:w-[180px] flex-shrink-0 overflow-hidden min-h-[180px]"
         style={{ background: book.cover }}
       >
-        <BookOpen size={40} className="text-gold/40" strokeWidth={1.2} />
-        <span
-          className="absolute bottom-3 right-3 font-urdu text-gold/40 text-3xl"
-          dir="rtl"
-          lang="ur"
-        >
-          {book.titleUrdu.charAt(0)}
-        </span>
+        {book.coverImg && !imgError ? (
+          <img
+            src={book.coverImg}
+            alt={`${book.title} book cover`}
+            loading="lazy"
+            decoding="async"
+            onError={() => setImgError(true)}
+            className="absolute inset-0 w-full h-full object-cover object-top"
+            style={{ filter: "brightness(0.88) contrast(1.05)" }}
+          />
+        ) : (
+          /* Styled book-cover fallback */
+          <div className="absolute inset-0 flex flex-col justify-between p-4">
+            <div>
+              <span className="font-etched text-[8px] tracking-[0.22em] uppercase text-gold/50 border-b border-gold/20 pb-1 block">
+                {book.genre}
+              </span>
+            </div>
+            <div className="text-center">
+              <p
+                className="font-urdu text-gold/90 leading-snug"
+                style={{ fontSize: "clamp(16px, 2.2vw, 20px)" }}
+                dir="rtl"
+                lang="ur"
+              >
+                {book.titleUrdu}
+              </p>
+              <p className="font-display italic text-foreground/60 text-[11px] mt-1 leading-tight">
+                {book.title}
+              </p>
+            </div>
+            <div className="border-t border-gold/20 pt-2">
+              <p className="font-classical italic text-secondary-warm text-[10px]">{book.author}</p>
+              <p className="font-etched text-[9px] tracking-[0.1em] text-tertiary-warm">{book.year}</p>
+            </div>
+          </div>
+        )}
+        {/* dark overlay so text above image is readable */}
+        {book.coverImg && !imgError && (
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+        )}
       </div>
 
       {/* Body */}
@@ -45,7 +79,7 @@ function BookCard({ book, index }: { book: Book; index: number }) {
           <span
             className={
               "font-etched text-[9px] tracking-[0.14em] uppercase rounded-full px-2.5 py-1 border " +
-              GENRE_BORDER[book.genre] +
+              GENRE_COLOR[book.genre] +
               " bg-background/40"
             }
             style={{ color: "hsl(var(--text-secondary))" }}
