@@ -1,12 +1,11 @@
-import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, Calendar, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { ERAS, type Era } from "@/data/literature";
-import GlassCard from "@/components/shared/GlassCard";
 import { useTypewriter } from "@/hooks/useTypewriter";
 
 function EraCard({ era, index }: { era: Era; index: number }) {
-  const [showFact, setShowFact] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const { displayText, phase } = useTypewriter(era.sher.lines, {
     typeSpeed: 70,
     deleteSpeed: 35,
@@ -118,27 +117,85 @@ function EraCard({ era, index }: { era: Era; index: number }) {
           ))}
         </div>
 
-        {/* Historical fact (collapsible) */}
+        {/* Expandable: Historical fact + Key Events + Major Works */}
         <button
-          onClick={() => setShowFact((v) => !v)}
+          onClick={() => setExpanded((v) => !v)}
           className="mt-5 flex items-center gap-2 font-etched text-[10px] tracking-[0.18em] uppercase text-gold/80 hover:text-gold transition-colors"
         >
-          Historical Fact
+          Explore This Era
           <ChevronDown
             size={12}
-            className={"transition-transform " + (showFact ? "rotate-180" : "")}
+            className={"transition-transform " + (expanded ? "rotate-180" : "")}
           />
         </button>
-        <motion.div
-          initial={false}
-          animate={{ height: showFact ? "auto" : 0, opacity: showFact ? 1 : 0 }}
-          transition={{ duration: 0.35 }}
-          className="overflow-hidden"
-        >
-          <p className="font-classical italic text-secondary-warm mt-3 text-sm leading-relaxed">
-            {era.historicalFact}
-          </p>
-        </motion.div>
+        <AnimatePresence>
+          {expanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="mt-4 space-y-5">
+                {/* Historical Fact */}
+                <p className="font-classical italic text-secondary-warm text-sm leading-relaxed">
+                  {era.historicalFact}
+                </p>
+
+                {/* Key Events Timeline */}
+                {era.keyEvents.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Calendar size={14} className="text-gold/70" />
+                      <span className="font-etched text-[10px] tracking-[0.16em] uppercase text-gold/80">
+                        Key Events
+                      </span>
+                    </div>
+                    <div className="space-y-2 pl-3 border-l border-gold/15">
+                      {era.keyEvents.map((event, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1, duration: 0.4 }}
+                          className="relative"
+                        >
+                          <div className="absolute -left-[11px] top-1.5 h-2 w-2 rounded-full bg-gold/40" />
+                          <p className="font-body text-secondary-warm text-[12px] leading-relaxed pl-2">
+                            {event}
+                          </p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Major Works */}
+                {era.majorWorks.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <BookOpen size={14} className="text-gold/70" />
+                      <span className="font-etched text-[10px] tracking-[0.16em] uppercase text-gold/80">
+                        Major Works
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {era.majorWorks.map((work, i) => (
+                        <span
+                          key={i}
+                          className="rounded-full border border-gold/15 bg-gold/[0.05] px-3 py-1.5 font-body text-[11px] text-secondary-warm"
+                        >
+                          {work}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
@@ -191,7 +248,7 @@ export function SectionHeader({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="font-etched text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-tertiary-warm"
+        className="font-etched text-[10px] sm:text-[11px] tracking-[0.30em] uppercase text-gold/55"
       >
         {eyebrow}
       </motion.p>
@@ -200,7 +257,7 @@ export function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="font-urdu text-grad-gold mt-3"
-        style={{ fontSize: "clamp(28px, 5vw, 56px)" }}
+        style={{ fontSize: "clamp(28px, 5vw, 54px)" }}
         dir="rtl"
         lang="ur"
       >
@@ -210,17 +267,17 @@ export function SectionHeader({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="font-display italic text-foreground mt-2"
-        style={{ fontSize: "clamp(18px, 2.5vw, 28px)" }}
+        className="font-display italic text-foreground/75 mt-2"
+        style={{ fontSize: "clamp(17px, 2.2vw, 26px)" }}
       >
         {title}
       </motion.h3>
       {subtitle && (
-        <p className="font-classical italic text-secondary-warm mt-3 max-w-xl mx-auto text-sm sm:text-base">
+        <p className="font-classical italic text-secondary-warm mt-3 max-w-xl mx-auto text-[13.5px] sm:text-[15px] leading-relaxed">
           {subtitle}
         </p>
       )}
-      <hr className="divider-gold mx-auto mt-6 w-24 border-0" />
+      <hr className="divider-gold mx-auto mt-6 w-20 border-0" />
     </div>
   );
 }

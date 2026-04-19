@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 /**
- * Custom spring-physics cursor — gold dot + trailing ring.
+ * Custom spring-physics cursor — feather quill nib only.
  * Scales up on interactive elements. Hidden on touch devices.
  */
 export default function CustomCursor() {
@@ -10,28 +10,14 @@ export default function CustomCursor() {
   const mouseY = useMotionValue(-100);
   const isHoveringMV = useMotionValue(0);
 
-  // Dot spring — fast, snappy
-  const dotSpringX = useSpring(mouseX, { stiffness: 500, damping: 28, mass: 0.5 });
-  const dotSpringY = useSpring(mouseY, { stiffness: 500, damping: 28, mass: 0.5 });
-  const dotX = useTransform(dotSpringX, (v) => v - 5);
-  const dotY = useTransform(dotSpringY, (v) => v - 5);
-  const dotScale = useSpring(
-    useTransform(isHoveringMV, [0, 1], [1, 0]),
+  // Feather spring — fast, snappy
+  const featherSpringX = useSpring(mouseX, { stiffness: 500, damping: 28, mass: 0.5 });
+  const featherSpringY = useSpring(mouseY, { stiffness: 500, damping: 28, mass: 0.5 });
+  const featherX = useTransform(featherSpringX, (v) => v - 2);
+  const featherY = useTransform(featherSpringY, (v) => v - 2);
+  const featherScale = useSpring(
+    useTransform(isHoveringMV, [0, 1], [1, 1.3]),
     { stiffness: 500, damping: 28, mass: 0.5 },
-  );
-
-  // Ring spring — slower, elegant lag
-  const ringSpringX = useSpring(mouseX, { stiffness: 200, damping: 20, mass: 0.8 });
-  const ringSpringY = useSpring(mouseY, { stiffness: 200, damping: 20, mass: 0.8 });
-  const ringX = useTransform(ringSpringX, (v) => v - 20);
-  const ringY = useTransform(ringSpringY, (v) => v - 20);
-  const ringScale = useSpring(
-    useTransform(isHoveringMV, [0, 1], [1, 1.5]),
-    { stiffness: 200, damping: 20, mass: 0.8 },
-  );
-  const ringOpacity = useSpring(
-    useTransform(isHoveringMV, [0, 1], [0.45, 0.9]),
-    { stiffness: 200, damping: 20, mass: 0.8 },
   );
 
   useEffect(() => {
@@ -67,28 +53,56 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Dot — small gold circle */}
+      {/* Feather quill nib SVG */}
       <motion.div
-        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
-          x: dotX,
-          y: dotY,
-          scale: dotScale,
-          background: "hsl(var(--gold-main))",
-          boxShadow: "0 0 8px hsl(var(--gold-main) / 0.5)",
+          x: featherX,
+          y: featherY,
+          scale: featherScale,
+          filter: "drop-shadow(0 0 6px hsl(var(--gold-main) / 0.5))",
         }}
-      />
-      {/* Ring — larger trailing circle */}
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{
-          x: ringX,
-          y: ringY,
-          scale: ringScale,
-          opacity: ringOpacity,
-          border: "1.5px solid hsl(var(--gold-main))",
-        }}
-      />
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ transform: "rotate(-30deg)" }}
+        >
+          {/* Feather body */}
+          <path
+            d="M20.12 3.88C17.61 1.37 10 4 7 7c-2.4 2.4-3.7 5.6-4 9l6-2c.5-.5 1.2-1.5 2-3s3.5-5.5 9.12-7.12z"
+            fill="hsl(var(--gold-main))"
+            opacity="0.85"
+          />
+          {/* Feather spine */}
+          <path
+            d="M20.12 3.88L4 20"
+            stroke="hsl(var(--gold-main))"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            opacity="0.9"
+          />
+          {/* Nib tip */}
+          <path
+            d="M3 21l1-1c.3-3.4 1.6-6.6 4-9"
+            stroke="hsl(var(--gold-main))"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          {/* Barb lines */}
+          <path
+            d="M15 5.5l-3 3M17 4.5l-4 4M12 7l-2.5 2.5"
+            stroke="hsl(var(--gold-warm))"
+            strokeWidth="0.5"
+            opacity="0.5"
+          />
+          {/* Ink dot at nib */}
+          <circle cx="3" cy="21" r="1.2" fill="hsl(var(--gold-bright))" />
+        </svg>
+      </motion.div>
     </>
   );
 }

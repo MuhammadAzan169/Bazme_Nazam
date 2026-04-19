@@ -110,6 +110,11 @@ export default function ShayariCarousel() {
               <p className="font-classical italic text-tertiary-warm text-sm mt-1">
                 {current.poetEng} · {current.year}
               </p>
+              {current.translation && (
+                <p className="font-body text-secondary-warm/70 text-[12px] mt-3 max-w-lg mx-auto leading-relaxed italic">
+                  "{current.translation}"
+                </p>
+              )}
             </motion.div>
           </AnimatePresence>
 

@@ -22,42 +22,55 @@ const LandingPage = () => {
       <main className="relative z-10">
         <HeroSection />
 
-        {/* Mood gallery */}
+        {/* ── Mood / Kaifiyat ────────────────────────────────── */}
         <section
           id="kaifiyat"
-          className="relative py-20 sm:py-28 px-4 sm:px-12 mx-auto max-w-[1200px]"
+          className="relative py-20 sm:py-28 px-4 sm:px-8 mx-auto max-w-[1200px]"
         >
-          <div className="text-center">
-            <p className="font-etched text-[10px] tracking-[0.28em] uppercase text-primary/70 mb-3">
-              ✦ Aaj ki Kaifiyat — Today's Mood ✦
+          <hr className="section-sep mb-20 sm:mb-28" />
+
+          <div className="text-center mb-12">
+            <p className="font-etched text-[10px] tracking-[0.32em] uppercase text-gold/55 mb-4">
+              ✦ Aaj ki Kaifiyat ✦
             </p>
             <h2
-              className="font-urdu text-primary mt-2"
-              style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
+              className="font-urdu text-grad-gold"
+              style={{ fontSize: "clamp(30px, 5vw, 52px)" }}
               dir="rtl"
               lang="ur"
             >
               آپ کی کیفیت کیا ہے؟
             </h2>
-            <p className="font-display italic text-grad-gold mt-2 text-xl sm:text-2xl">
+            <p className="font-display italic text-foreground/70 mt-2 text-lg sm:text-xl">
               What Stirs Your Heart Tonight?
             </p>
-            <p className="font-classical italic text-secondary-warm mt-4 max-w-xl mx-auto">
-              Choose a mood — the entire bazm will shift its colour, its light, its breath to match yours.
+            <p className="font-classical italic text-secondary-warm mt-3 max-w-lg mx-auto text-sm">
+              The bazm will shift its light to match your mood.
             </p>
+            <hr className="divider-gold mx-auto mt-6 w-20 border-0" />
           </div>
 
-          <div className="mt-12">
-            <MoodPicker showImages />
-          </div>
+          <MoodPicker showImages />
         </section>
 
+        <hr className="section-sep mx-4 sm:mx-8" />
         <TareekharSection />
+
+        <hr className="section-sep mx-4 sm:mx-8" />
         <AsnafSection />
+
+        <hr className="section-sep mx-4 sm:mx-8" />
         <ShuaraSection />
+
+        <hr className="section-sep mx-4 sm:mx-8" />
         <NovelsSection />
+
+        <hr className="section-sep mx-4 sm:mx-8" />
         <ShayariCarousel />
+
+        <hr className="section-sep mx-4 sm:mx-8" />
         <MaktabaSection />
+
         <Footer />
       </main>
 

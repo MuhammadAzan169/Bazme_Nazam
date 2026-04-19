@@ -42,7 +42,7 @@ export default function HeroSection() {
         <div
           className="absolute inset-0 mix-blend-overlay"
           style={{
-            background: `radial-gradient(ellipse at 50% 30%, hsl(${moodInfo.primaryHsl} / 0.22), transparent 60%)`,
+            background: `radial-gradient(ellipse at 50% 30%, hsl(${moodInfo.primaryHsl} / 0.10), transparent 60%)`,
           }}
         />
       </div>

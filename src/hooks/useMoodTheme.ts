@@ -31,12 +31,8 @@ export function useMoodTheme() {
     root.style.setProperty("--bg-secondary", m.bgSecondaryHsl);
     root.style.setProperty("--bg-tertiary", m.bgSecondaryHsl);
 
-    // Gold family → mood family
-    root.style.setProperty("--gold-bright", m.primaryHsl);
-    root.style.setProperty("--gold-main", m.primaryHsl);
-    root.style.setProperty("--gold-warm", m.accentHsl);
-    root.style.setProperty("--gold-dim", m.borderHsl);
-    root.style.setProperty("--text-gold", m.textGoldHsl);
+    // NOTE: gold palette intentionally unchanged — gold stays golden.
+    // Mood accent is expressed via --primary, the ambient aura, and background hue only.
 
     // Hero gradient
     root.style.setProperty(
