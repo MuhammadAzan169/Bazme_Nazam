@@ -10,7 +10,7 @@ const wordVariants = {
     opacity: 1,
     filter: "blur(0px)",
     y: 0,
-    transition: { duration: 0.55, ease: [0.22, 0.68, 0.2, 1], delay: i * 0.07 },
+    transition: { duration: 0.55, ease: [0.22, 0.68, 0.2, 1] as [number,number,number,number], delay: i * 0.07 },
   }),
 };
 
@@ -296,40 +296,75 @@ export function SectionHeader({
 }) {
   return (
     <div className="text-center">
+      {/* eyebrow */}
       <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="font-etched text-[10px] sm:text-[11px] tracking-[0.30em] uppercase text-gold/55"
+        initial={{ opacity: 0, y: -6 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.55, ease: "easeOut" }}
+        className="font-etched text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-gold/50 mb-4"
       >
         {eyebrow}
       </motion.p>
+
+      {/* Urdu heading — single element blur reveal.
+          Do NOT split into child spans here: text-grad-gold uses
+          -webkit-text-fill-color:transparent which is inherited,
+          and background-clip:text does not propagate to child elements,
+          making any child spans invisible. */}
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="font-urdu text-grad-gold mt-3"
-        style={{ fontSize: "clamp(28px, 5vw, 54px)" }}
+        initial={{ opacity: 0, filter: "blur(18px)", y: 22 }}
+        whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.85, ease: [0.22, 0.68, 0.2, 1] as [number,number,number,number], delay: 0.1 }}
         dir="rtl"
         lang="ur"
+        className="font-urdu text-grad-gold"
+        style={{ fontSize: "clamp(30px, 5.5vw, 62px)" }}
       >
         {urdu}
       </motion.h2>
+
+      {/* animated gold rule */}
+      <motion.div
+        initial={{ scaleX: 0, opacity: 0 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] as [number,number,number,number], delay: 0.4 }}
+        className="mx-auto my-4"
+        style={{
+          transformOrigin: "center",
+          height: 1,
+          width: 80,
+          background: "var(--grad-divider)",
+          boxShadow: "0 0 10px rgb(var(--primary-rgb) / 0.35)",
+        }}
+      />
+
+      {/* English title */}
       <motion.h3
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="font-display italic text-foreground/75 mt-2"
-        style={{ fontSize: "clamp(17px, 2.2vw, 26px)" }}
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.55, ease: "easeOut", delay: 0.55 }}
+        className="font-display italic text-foreground/70"
+        style={{ fontSize: "clamp(16px, 2.2vw, 24px)" }}
       >
         {title}
       </motion.h3>
+
+      {/* optional description */}
       {subtitle && (
-        <p className="font-classical italic text-secondary-warm mt-3 max-w-xl mx-auto text-[13.5px] sm:text-[15px] leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="font-classical italic text-secondary-warm mt-3 max-w-xl mx-auto text-[13px] sm:text-[14.5px] leading-relaxed"
+        >
           {subtitle}
-        </p>
+        </motion.p>
       )}
-      <hr className="divider-gold mx-auto mt-6 w-20 border-0" />
     </div>
   );
 }
