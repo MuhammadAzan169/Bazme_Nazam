@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, BookOpen, MessageCircle, Sparkles } from "lucide-react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTypewriter } from "@/hooks/useTypewriter";
-import CalligraphyBg from "@/components/shared/CalligraphyBg";
 import { MOODS, useStore } from "@/store/useStore";
 import { ERAS, POETS, BOOKS } from "@/data/literature";
 import heroImg from "@/assets/hero-mushaira.jpg";
@@ -18,6 +18,14 @@ export default function HeroSection() {
   const navigate = useNavigate();
   const mood = useStore((s) => s.mood);
   const moodInfo = MOODS[mood];
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0px", "60px"]);
+
   const { displayText, phase } = useTypewriter(ROTATING, {
     typeSpeed: 55,
     deleteSpeed: 28,
@@ -26,58 +34,51 @@ export default function HeroSection() {
   });
 
   return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden bg-grad-hero pt-28 sm:pt-32">
-      {/* Cinematic backdrop */}
-      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+    <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-grad-hero pt-28 sm:pt-32">
+      {/* Cinematic backdrop with parallax */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+        style={{ y: bgY }}
+      >
         <img
           src={heroImg}
           alt=""
           width={1920}
           height={1080}
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
           style={{ filter: "saturate(0.85) contrast(1.05)" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/55 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/40 to-background" />
         <div
           className="absolute inset-0 mix-blend-overlay"
           style={{
             background: `radial-gradient(ellipse at 50% 30%, hsl(${moodInfo.primaryHsl} / 0.10), transparent 60%)`,
           }}
         />
-      </div>
+      </motion.div>
 
-      <CalligraphyBg />
-
-      <div className="relative z-10 mx-auto flex max-w-[1100px] flex-col items-center px-5 text-center sm:px-8">
-        {/* Top tag */}
-        <motion.p
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="font-etched text-[10px] sm:text-[11px] tracking-[0.32em] uppercase text-primary/70 flex items-center gap-2"
-        >
-          <Sparkles size={12} className="text-primary" />
-          The Gathering of Words
-          <Sparkles size={12} className="text-primary" />
-        </motion.p>
-
-        {/* Urdu title */}
+      {/* Gold scanline overlay */}
+      <div
+        aria-hidden="true"
+        className="hero-scanlines pointer-events-none absolute inset-0 z-[2]"
+      />
+      <motion.div style={{ y: contentY }} className="relative z-10 mx-auto flex max-w-[1100px] flex-col items-center px-5 text-center sm:px-8">
+        {/* Main title */}
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0)" }}
           transition={{ delay: 0.25, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-urdu mt-6 leading-[1.4]"
+          className="font-classical italic mt-6 leading-[1.4] text-secondary-warm"
           style={{
             fontSize: "clamp(48px, 10vw, 120px)",
             color: `hsl(${moodInfo.primaryHsl})`,
             textShadow: `0 0 40px hsl(${moodInfo.primaryHsl} / 0.4)`,
             transition: "color 1s ease, text-shadow 1s ease",
           }}
-          dir="rtl"
-          lang="ur"
         >
-          بزمِ سخن
+          The Gathering of Words
         </motion.h1>
 
         {/* English title */}
@@ -85,10 +86,12 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
-          className="font-display italic text-grad-gold mt-2"
+          className="font-display italic text-grad-gold mt-2 flex items-center justify-center gap-2"
           style={{ fontSize: "clamp(20px, 3.5vw, 36px)" }}
         >
-          Bazm-e-Sukhan
+          <span>Bazm-e-Sukhan</span>
+          <span>-</span>
+          <span className="font-display" dir="rtl" lang="ur">بزمِ سخن</span>
         </motion.p>
 
         {/* Tagline + typewriter */}
@@ -108,25 +111,26 @@ export default function HeroSection() {
           </span>
         </motion.div>
 
-        {/* CTA buttons */}
+        {/* CTA buttons — clear onboarding */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.05 }}
-          className="mt-12 flex w-full max-w-[420px] flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center"
+          className="mt-12 flex w-full max-w-[560px] flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:justify-center"
         >
-          <button
-            onClick={() => navigate("/chatbot")}
-            className="btn-gold inline-flex items-center justify-center gap-2 px-8 py-4 text-[14px]"
+          <a
+            href="#shuara"
+            className="border border-gold/10 glass-hover inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 font-etched font-bold text-[12px] tracking-[0.18em] uppercase text-primary"
           >
-            AI se Baat Karein
-            <ArrowRight size={16} />
-          </button>
+            <BookOpen size={14} />
+            Browse Poets
+          </a>
           <a
             href="#kaifiyat"
-            className="glass glass-hover inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 font-etched text-[12px] tracking-[0.18em] uppercase text-primary"
+            className="border border-gold/10 glass-hover inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 font-etched font-bold text-[12px] tracking-[0.18em] uppercase text-primary"
           >
-            Choose Your Mood
+            <Sparkles size={14} />
+            Choose Mood
           </a>
         </motion.div>
 
@@ -144,19 +148,19 @@ export default function HeroSection() {
           ].map(({ n, l, u }) => (
             <div
               key={l}
-              className="glass rounded-xl px-3 py-4 sm:px-6 sm:py-6 text-center"
+              className="backdrop-blur-[1px] border border-gold/5 rounded-xl px-3 py-4 sm:px-6 sm:py-6 text-center"
             >
               <p
-                className="text-grad-gold font-display text-2xl sm:text-4xl leading-none"
-                style={{ fontWeight: 600 }}
+                className="text-grad-gold font-display text-2xl sm:text-4xl leading-none font-bold"
+                style={{ fontWeight: 700 }}
               >
                 {n}
               </p>
-              <p className="font-etched mt-2 text-[9px] sm:text-[10px] tracking-[0.16em] uppercase text-secondary-warm">
+              <p className="font-etched mt-2 text-[9px] sm:text-[10px] tracking-[0.16em] uppercase text-secondary-warm font-bold">
                 {l}
               </p>
               <p
-                className="font-urdu text-[10px] sm:text-xs text-primary/60 mt-0.5"
+                className="font-urdu text-[10px] sm:text-xs text-primary/60 mt-0.5 font-bold"
                 dir="rtl"
                 lang="ur"
               >
@@ -165,7 +169,7 @@ export default function HeroSection() {
             </div>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Bottom fade */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background" />

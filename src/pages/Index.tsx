@@ -1,16 +1,26 @@
+import { lazy, Suspense } from "react";
 import Footer from "@/components/landing/Footer";
 import HeroSection from "@/components/landing/HeroSection";
-import TareekharSection from "@/components/landing/TareekharSection";
-import AsnafSection from "@/components/landing/AsnafSection";
-import ShuaraSection from "@/components/landing/ShuaraSection";
-import NovelsSection from "@/components/landing/NovelsSection";
-import ShayariCarousel from "@/components/landing/ShayariCarousel";
-import MaktabaSection from "@/components/landing/MaktabaSection";
-import MiniAIWidget from "@/components/landing/MiniAIWidget";
 import Navbar from "@/components/shared/Navbar";
 import ParticleCanvas from "@/components/shared/ParticleCanvas";
 import MoodAura from "@/components/shared/MoodAura";
 import MoodPicker from "@/components/shared/MoodPicker";
+
+const TareekharSection = lazy(() => import("@/components/landing/TareekharSection"));
+const AsnafSection = lazy(() => import("@/components/landing/AsnafSection"));
+const ShuaraSection = lazy(() => import("@/components/landing/ShuaraSection"));
+const NovelsSection = lazy(() => import("@/components/landing/NovelsSection"));
+const ShayariCarousel = lazy(() => import("@/components/landing/ShayariCarousel"));
+const MaktabaSection = lazy(() => import("@/components/landing/MaktabaSection"));
+const MiniAIWidget = lazy(() => import("@/components/landing/MiniAIWidget"));
+
+const SectionFallback = () => (
+  <div className="flex justify-center py-20">
+    <span className="font-urdu text-gold/40 text-xl animate-pulse" dir="rtl">
+      ✦
+    </span>
+  </div>
+);
 
 const LandingPage = () => {
   return (
@@ -54,27 +64,41 @@ const LandingPage = () => {
         </section>
 
         <hr className="section-sep mx-4 sm:mx-8" />
-        <TareekharSection />
+        <Suspense fallback={<SectionFallback />}>
+          <TareekharSection />
+        </Suspense>
 
         <hr className="section-sep mx-4 sm:mx-8" />
-        <AsnafSection />
+        <Suspense fallback={<SectionFallback />}>
+          <AsnafSection />
+        </Suspense>
 
         <hr className="section-sep mx-4 sm:mx-8" />
-        <ShuaraSection />
+        <Suspense fallback={<SectionFallback />}>
+          <ShuaraSection />
+        </Suspense>
 
         <hr className="section-sep mx-4 sm:mx-8" />
-        <NovelsSection />
+        <Suspense fallback={<SectionFallback />}>
+          <NovelsSection />
+        </Suspense>
 
         <hr className="section-sep mx-4 sm:mx-8" />
-        <ShayariCarousel />
+        <Suspense fallback={<SectionFallback />}>
+          <ShayariCarousel />
+        </Suspense>
 
         <hr className="section-sep mx-4 sm:mx-8" />
-        <MaktabaSection />
+        <Suspense fallback={<SectionFallback />}>
+          <MaktabaSection />
+        </Suspense>
 
         <Footer />
       </main>
 
-      <MiniAIWidget />
+      <Suspense fallback={null}>
+        <MiniAIWidget />
+      </Suspense>
     </div>
   );
 };

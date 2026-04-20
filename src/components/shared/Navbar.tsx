@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { NAV_LINKS } from "@/data/literature";
 
@@ -12,6 +12,7 @@ export default function Navbar({ variant = "landing" }: Props) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -19,6 +20,30 @@ export default function Navbar({ variant = "landing" }: Props) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Scroll-spy: track which section is in view
+  const handleScrollSpy = useCallback(() => {
+    if (variant !== "landing") return;
+    const sections = NAV_LINKS.map((l) => l.href.replace("#", ""))
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    let current = "";
+    for (const section of sections) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 150 && rect.bottom > 100) {
+        current = section.id;
+      }
+    }
+    setActiveSection(current);
+  }, [variant]);
+
+  useEffect(() => {
+    if (variant !== "landing") return;
+    window.addEventListener("scroll", handleScrollSpy, { passive: true });
+    handleScrollSpy();
+    return () => window.removeEventListener("scroll", handleScrollSpy);
+  }, [handleScrollSpy, variant]);
 
   return (
     <>
@@ -50,25 +75,29 @@ export default function Navbar({ variant = "landing" }: Props) {
           {/* Desktop links */}
           {variant === "landing" && (
             <ul className="hidden md:flex items-center gap-1">
-              {NAV_LINKS.map(({ label, labelUrdu, href }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="group flex flex-col items-center gap-0.5 rounded-full px-3 py-2 transition-colors"
-                  >
-                    <span className="font-etched text-[11px] tracking-[0.18em] uppercase text-secondary-warm group-hover:text-gold transition-colors">
-                      {label}
-                    </span>
-                    <span
-                      className="font-urdu text-[10px] text-secondary-warm/60 group-hover:text-gold transition-colors"
-                      dir="rtl"
-                      lang="ur"
+              {NAV_LINKS.map(({ label, labelUrdu, href }) => {
+                const sectionId = href.replace("#", "");
+                const isActive = activeSection === sectionId;
+                return (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className={`nav-link-anim group flex flex-col items-center gap-0.5 rounded-full px-3 py-2 transition-colors ${isActive ? "nav-link-active" : ""}`}
                     >
-                      {labelUrdu}
-                    </span>
-                  </a>
-                </li>
-              ))}
+                      <span className={`font-etched text-[11px] tracking-[0.18em] uppercase transition-colors ${isActive ? "text-gold" : "text-secondary-warm group-hover:text-gold"}`}>
+                        {label}
+                      </span>
+                      <span
+                        className={`font-urdu text-[10px] transition-colors ${isActive ? "text-gold" : "text-secondary-warm/60 group-hover:text-gold"}`}
+                        dir="rtl"
+                        lang="ur"
+                      >
+                        {labelUrdu}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           )}
 

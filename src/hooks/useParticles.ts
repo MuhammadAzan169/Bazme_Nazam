@@ -31,12 +31,32 @@ export function useParticles(canvasRef: React.RefObject<HTMLCanvasElement>) {
     window.addEventListener("resize", resize);
 
     const isMobile = window.innerWidth < 768;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     const lowPower = (navigator.hardwareConcurrency ?? 8) < 4;
-    const COUNT = isMobile ? 35 : lowPower ? 50 : 75;
+
+    // Disable particles on mobile entirely for performance
+    if (isMobile) {
+      return () => {
+        window.removeEventListener("resize", resize);
+      };
+    }
+
+    const COUNT = isSafari ? 35 : lowPower ? 50 : 75;
     const COLORS = ["#E8B45A", "#D4A040", "#C49030", "#C9667A", "#B05065", "#FFD98A"];
 
     const w = window.innerWidth;
     const h = window.innerHeight;
+
+    // Cursor magnetism tracking
+    const mouse = { x: -9999, y: -9999 };
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+
+    const ATTRACT_RADIUS = 120;
+    const ATTRACT_FORCE = 0.012;
 
     const particles = Array.from({ length: COUNT }, () => ({
       x: Math.random() * w,
@@ -62,6 +82,15 @@ export function useParticles(canvasRef: React.RefObject<HTMLCanvasElement>) {
         if (p.x > w + 5) p.x = -5;
         if (p.y < -5) p.y = h + 5;
         if (p.y > h + 5) p.y = -5;
+
+        // Cursor magnetism
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < ATTRACT_RADIUS && dist > 1) {
+          p.x += (dx / dist) * ATTRACT_FORCE * (ATTRACT_RADIUS - dist);
+          p.y += (dy / dist) * ATTRACT_FORCE * (ATTRACT_RADIUS - dist);
+        }
 
         const opacity =
           p.opacity * (0.5 + 0.5 * Math.sin(frame * p.pulseSpeed + p.pulsePhase));
@@ -89,6 +118,7 @@ export function useParticles(canvasRef: React.RefObject<HTMLCanvasElement>) {
     return () => {
       if (animRef.current) cancelAnimationFrame(animRef.current);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [canvasRef]);

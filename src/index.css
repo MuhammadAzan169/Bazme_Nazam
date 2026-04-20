@@ -506,3 +506,192 @@
     inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
+/* ─── Sher Glow Effects ─── */
+.sher-glow {
+  transition: text-shadow 0.6s ease;
+}
+.sher-glow:hover {
+  text-shadow:
+    0 0 20px hsl(var(--gold-bright) / 0.35),
+    0 0 40px hsl(var(--gold-main) / 0.18),
+    0 0 80px hsl(var(--gold-dim) / 0.08);
+}
+.sher-active-glow {
+  animation: sherBreathe 3s ease-in-out infinite;
+}
+@keyframes sherBreathe {
+  0%, 100% {
+    text-shadow:
+      0 0 15px hsl(var(--gold-bright) / 0.25),
+      0 0 35px hsl(var(--gold-main) / 0.12);
+  }
+  50% {
+    text-shadow:
+      0 0 25px hsl(var(--gold-bright) / 0.40),
+      0 0 55px hsl(var(--gold-main) / 0.20);
+  }
+}
+
+/* ─── Gold Scanlines (apply to hero overlay div) ─── */
+.hero-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(232, 180, 90, 0.018) 2px,
+    rgba(232, 180, 90, 0.018) 4px
+  );
+}
+
+/* ─── 3D Card Tilt ─── */
+.tilt-card {
+  transition: transform 0.15s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.tilt-card:not(:hover) {
+  transition: transform 0.4s ease;
+}
+
+/* ─── Section Watermark ─── */
+.section-watermark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-urdu);
+  font-size: clamp(100px, 18vw, 200px);
+  line-height: 1;
+  color: hsl(var(--gold-main) / 0.025);
+  z-index: 0;
+  direction: rtl;
+}
+
+/* ─── Modal Fog Entry ─── */
+.modal-fog-enter {
+  animation: fogClear 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fogClear {
+  from { opacity: 0; filter: blur(20px) brightness(0.5); transform: scale(0.94); }
+  to   { opacity: 1; filter: blur(0px)  brightness(1);   transform: scale(1);    }
+}
+
+/* ─── Navbar scroll-spy active link ─── */
+.nav-link-active {
+  position: relative;
+}
+.nav-link-active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: hsl(var(--gold-main));
+  border-radius: 1px;
+  box-shadow: 0 0 8px hsl(var(--gold-main) / 0.4);
+}
+
+/* ─── Nav link underline animation ─── */
+.nav-link-anim {
+  position: relative;
+}
+.nav-link-anim::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: hsl(var(--gold-main));
+  border-radius: 1px;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+.nav-link-anim:hover::after {
+  width: 60%;
+  left: 20%;
+}
+
+/* ─── Button ripple ─── */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.btn-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.btn-ripple:active::after {
+  opacity: 1;
+  transform: scale(2.5);
+  transition: none;
+}
+
+/* ─── Message streaming effect ─── */
+@keyframes streamIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stream-msg {
+  animation: streamIn 0.3s ease-out forwards;
+}
+
+/* ─── Chat avatar ─── */
+.chat-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.chat-avatar-user {
+  background: hsl(var(--gold-main) / 0.15);
+  border: 1px solid hsl(var(--gold-main) / 0.25);
+  color: hsl(var(--gold-main));
+}
+.chat-avatar-ai {
+  background: hsl(var(--primary) / 0.15);
+  border: 1px solid hsl(var(--primary) / 0.25);
+  color: hsl(var(--primary));
+}
+
+/* ─── Mobile UX overrides ─── */
+@media (max-width: 767px) {
+  .glass {
+    backdrop-filter: blur(8px) saturate(160%);
+    -webkit-backdrop-filter: blur(8px) saturate(160%);
+  }
+  .glass-strong {
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
+  .glass-navbar {
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
+}
+
+/* ─── Reading mode ─── */
+.reading-mode {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+.reading-mode .font-urdu {
+  font-size: clamp(18px, 2.5vw, 24px) !important;
+  line-height: 2.6 !important;
+}
+
+/* ─── GPU acceleration helpers ─── */
+.gpu-accel {
+  transform: translateZ(0);
+  will-change: transform;
+}
+

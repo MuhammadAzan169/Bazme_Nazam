@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ChevronDown, BookOpen, Star } from "lucide-react";
 import { BOOKS, type Book } from "@/data/literature";
 import { SectionHeader } from "./TareekharSection";
+import SectionWatermark from "@/components/shared/SectionWatermark";
 
 const ALL_GENRES = Array.from(new Set(BOOKS.map((b) => b.genre)));
 
@@ -203,8 +204,9 @@ export default function NovelsSection() {
   return (
     <section
       id="novels"
-      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1300px]"
+      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1300px] overflow-hidden"
     >
+      <SectionWatermark word="ناول" position="left" />
       <SectionHeader
         eyebrow="✦ Maqbool Kitaben ✦"
         urdu="مقبول کتابیں"

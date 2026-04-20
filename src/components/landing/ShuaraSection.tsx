@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { BookOpen, ChevronDown, Feather, Quote, X } from "lucide-react";
 import { POETS, type Poet } from "@/data/literature";
 import { SectionHeader } from "./TareekharSection";
+import SectionWatermark from "@/components/shared/SectionWatermark";
 
 function PoetDetailModal({
   poet,
@@ -30,15 +31,18 @@ function PoetDetailModal({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
       onClick={onClose}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      {/* Backdrop with blur */}
+      <div
+        className="absolute inset-0 bg-black/70"
+        style={{ backdropFilter: "blur(8px)" }}
+      />
 
-      {/* Content */}
+      {/* Content with fog entry */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.92, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.92, y: 20 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        initial={{ opacity: 0, scale: 0.94, filter: "blur(20px) brightness(0.5)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px) brightness(1)" }}
+        exit={{ opacity: 0, scale: 0.96, filter: "blur(10px) brightness(0.6)" }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
         className="glass relative z-10 w-full max-w-[800px] max-h-[85vh] overflow-y-auto overscroll-contain"
         style={{ borderRadius: "var(--r-xl)" }}
@@ -212,16 +216,32 @@ function PoetDetailModal({
 function PoetCard({ poet, index }: { poet: Poet; index: number }) {
   const [imgError, setImgError] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(600px) rotateY(${x * 14}deg) rotateX(${-y * 10}deg) translateY(-6px)`;
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    if (cardRef.current) cardRef.current.style.transform = "";
+  }, []);
 
   return (
     <>
       <motion.article
+        ref={cardRef}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ delay: index * 0.06, duration: 0.65 }}
-        whileHover={{ y: -8 }}
-        className="glass glass-hover overflow-hidden flex flex-col cursor-pointer"
+        onMouseMove={handleMove}
+        onMouseLeave={handleLeave}
+        className="tilt-card glass glass-hover overflow-hidden flex flex-col cursor-pointer"
         style={{ borderRadius: "var(--r-lg)" }}
         onClick={() => setShowDetail(true)}
       >
@@ -329,8 +349,9 @@ export default function ShuaraSection() {
   return (
     <section
       id="shuara"
-      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1300px]"
+      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1300px] overflow-hidden"
     >
+      <SectionWatermark word="شعراء" position="right" />
       <SectionHeader
         eyebrow="✦ Shuara-e-Urdu ✦"
         urdu="شعرائے اردو"

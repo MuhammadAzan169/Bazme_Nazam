@@ -1,11 +1,12 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { Bookmark, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FEATURED_SHERS } from "@/data/literature";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import { SectionHeader } from "./TareekharSection";
 import { useStore } from "@/store/useStore";
 import { toast } from "sonner";
+import SectionWatermark from "@/components/shared/SectionWatermark";
 
 export default function ShayariCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,6 +15,14 @@ export default function ShayariCarousel() {
   const addBookmark = useStore((s) => s.addBookmark);
   const bookmarks = useStore((s) => s.bookmarks);
   const isSaved = bookmarks.some((b) => b.id === current.id);
+
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const urduY = useTransform(scrollYProgress, [0, 1], ["-30px", "30px"]);
+  const englishY = useTransform(scrollYProgress, [0, 1], ["20px", "-20px"]);
 
   const { displayText, phase, textIndex } = useTypewriter(
     [current.lines[1]],
@@ -42,8 +51,10 @@ export default function ShayariCarousel() {
   return (
     <section
       id="shayari"
-      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1100px] text-center"
+      ref={sectionRef}
+      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1100px] text-center overflow-hidden"
     >
+      <SectionWatermark word="شاعری" position="center" />
       <SectionHeader
         eyebrow="✦ Muntakhib Ashaar ✦"
         urdu="منتخب اشعار"
@@ -70,24 +81,24 @@ export default function ShayariCarousel() {
               transition={{ duration: 0.6 }}
               lang="ur"
               dir="rtl"
-              className="font-urdu text-right text-gold leading-[2.4] mb-2"
-              style={{ fontSize: "clamp(18px, 3vw, 28px)" }}
+              className="font-urdu sher-glow sher-active-glow text-right text-gold leading-[2.4] mb-2"
+              style={{ fontSize: "clamp(18px, 3vw, 28px)", y: urduY }}
             >
               {current.lines[0]}
             </motion.p>
           </AnimatePresence>
 
-          <p
+          <motion.p
             lang="ur"
             dir="rtl"
             className={
-              "typewriter-text font-urdu text-right text-gold leading-[2.4] block mb-7 " +
+              "typewriter-text font-urdu sher-glow text-right text-gold leading-[2.4] block mb-7 " +
               (phase === "deleting" ? "deleting" : "")
             }
             style={{ fontSize: "clamp(18px, 3vw, 28px)" }}
           >
             {displayText}
-          </p>
+          </motion.p>
 
           <hr className="divider-gold mx-auto mb-5 w-20 border-0" />
 
@@ -111,9 +122,12 @@ export default function ShayariCarousel() {
                 {current.poetEng} · {current.year}
               </p>
               {current.translation && (
-                <p className="font-body text-secondary-warm/70 text-[12px] mt-3 max-w-lg mx-auto leading-relaxed italic">
+                <motion.p
+                  style={{ y: englishY }}
+                  className="font-body text-secondary-warm/70 text-[12px] mt-3 max-w-lg mx-auto leading-relaxed italic"
+                >
                   "{current.translation}"
-                </p>
+                </motion.p>
               )}
             </motion.div>
           </AnimatePresence>

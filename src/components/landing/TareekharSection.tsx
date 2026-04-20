@@ -3,6 +3,7 @@ import { ChevronDown, Calendar, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { ERAS, type Era } from "@/data/literature";
 import { useTypewriter } from "@/hooks/useTypewriter";
+import SectionWatermark from "@/components/shared/SectionWatermark";
 
 function EraCard({ era, index }: { era: Era; index: number }) {
   const [expanded, setExpanded] = useState(false);
@@ -205,8 +206,9 @@ export default function TareekharSection() {
   return (
     <section
       id="tareekh"
-      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1100px]"
+      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1100px] overflow-hidden"
     >
+      <SectionWatermark word="تاریخ" position="right" />
       <SectionHeader
         eyebrow="✦ Tareekh-e-Adab ✦"
         urdu="تاریخِ ادب"

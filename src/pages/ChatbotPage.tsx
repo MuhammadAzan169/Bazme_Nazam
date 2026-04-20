@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Feather, Info, Menu, Plus, Send, Sparkles, X } from "lucide-react";
+import { Feather, Info, Menu, Plus, Send, Sparkles, User, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "@/store/useStore";
 import Navbar from "@/components/shared/Navbar";
@@ -92,15 +92,18 @@ export default function ChatbotPage() {
     addMessage({ id: crypto.randomUUID(), role: "user", content: t, ts: Date.now() });
     setInput("");
     setThinking(true);
+    // Realistic typing delay based on response length
+    const reply = generate(t);
+    const delay = Math.min(800 + reply.length * 3, 2500);
     setTimeout(() => {
       addMessage({
         id: crypto.randomUUID(),
         role: "assistant",
-        content: generate(t),
+        content: reply,
         ts: Date.now(),
       });
       setThinking(false);
-    }, 1100);
+    }, delay);
   };
 
   return (
@@ -266,19 +269,44 @@ export default function ChatbotPage() {
                     خوش آمدید
                   </p>
                   <p className="font-classical italic text-secondary-warm mt-2 max-w-md mx-auto">
-                    Aap kis baare mein baat karna chahenge? Shayari, novel, ya kisi shayar ki kahani?
+                    What do you want to explore?
                   </p>
 
-                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto">
-                    {QUICK_PROMPTS.slice(0, 4).map((q) => (
+                  {/* Categorized suggestion cards */}
+                  <div className="mt-6 space-y-3 max-w-lg mx-auto">
+                    <p className="font-etched text-[9px] tracking-[0.18em] uppercase text-tertiary-warm">
+                      Ask about
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
                       <button
-                        key={q}
-                        onClick={() => send(q)}
-                        className="glass glass-hover rounded-lg px-3.5 py-2.5 text-left font-classical italic text-[12.5px] text-secondary-warm hover:text-gold"
+                        onClick={() => send("Ghalib ki sab se mashhoor ghazal sunaiye")}
+                        className="glass glass-hover rounded-lg px-3.5 py-3 text-left"
                       >
-                        {q}
+                        <span className="font-display italic text-gold text-[13px]">Ghalib</span>
+                        <p className="font-classical italic text-[11px] text-secondary-warm/70 mt-0.5">Greatest ghazal</p>
                       </button>
-                    ))}
+                      <button
+                        onClick={() => send("Ghazal aur Nazm mein kya farq hai?")}
+                        className="glass glass-hover rounded-lg px-3.5 py-3 text-left"
+                      >
+                        <span className="font-display italic text-gold text-[13px]">Ghazal Rules</span>
+                        <p className="font-classical italic text-[11px] text-secondary-warm/70 mt-0.5">How it works</p>
+                      </button>
+                      <button
+                        onClick={() => send("Peer-e-Kamil ke baare mein batayein")}
+                        className="glass glass-hover rounded-lg px-3.5 py-3 text-left"
+                      >
+                        <span className="font-display italic text-gold text-[13px]">Best Books</span>
+                        <p className="font-classical italic text-[11px] text-secondary-warm/70 mt-0.5">Novels & poetry</p>
+                      </button>
+                      <button
+                        onClick={() => send("Mujhe dard ki shayari chahiye")}
+                        className="glass glass-hover rounded-lg px-3.5 py-3 text-left"
+                      >
+                        <span className="font-display italic text-gold text-[13px]">Mood Poetry</span>
+                        <p className="font-classical italic text-[11px] text-secondary-warm/70 mt-0.5">Shers by feeling</p>
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -289,12 +317,18 @@ export default function ChatbotPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={
-                    "flex " + (m.role === "user" ? "justify-end" : "justify-start")
+                    "flex gap-3 stream-msg " +
+                    (m.role === "user" ? "justify-end" : "justify-start")
                   }
                 >
+                  {m.role === "assistant" && (
+                    <div className="chat-avatar chat-avatar-ai mt-1">
+                      <Feather size={14} />
+                    </div>
+                  )}
                   <div
                     className={
-                      "max-w-[85%] rounded-2xl px-4 py-3 text-[13.5px] leading-[1.75] whitespace-pre-wrap " +
+                      "max-w-[80%] rounded-2xl px-4 py-3 text-[13.5px] leading-[1.75] whitespace-pre-wrap " +
                       (m.role === "user"
                         ? "bg-gold/15 border border-gold/25 text-foreground"
                         : "glass text-secondary-warm")
@@ -302,15 +336,25 @@ export default function ChatbotPage() {
                   >
                     {m.content}
                   </div>
+                  {m.role === "user" && (
+                    <div className="chat-avatar chat-avatar-user mt-1">
+                      <User size={14} />
+                    </div>
+                  )}
                 </motion.div>
               ))}
 
               {thinking && (
-                <div className="flex items-center gap-2 px-4 py-3">
-                  <Sparkles size={14} className="text-gold animate-pulse" />
-                  <span className="font-classical italic shimmer-gold">
-                    Soch raha hoon…
-                  </span>
+                <div className="flex items-center gap-3 px-1 py-3">
+                  <div className="chat-avatar chat-avatar-ai">
+                    <Feather size={14} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Sparkles size={14} className="text-gold animate-pulse" />
+                    <span className="font-classical italic shimmer-gold">
+                      Soch raha hoon…
+                    </span>
+                  </div>
                 </div>
               )}
             </div>

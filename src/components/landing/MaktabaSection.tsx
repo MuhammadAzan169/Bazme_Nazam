@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Bookmark, Trash2 } from "lucide-react";
 import { useStore } from "@/store/useStore";
 import { SectionHeader } from "./TareekharSection";
+import SectionWatermark from "@/components/shared/SectionWatermark";
 
 export default function MaktabaSection() {
   const bookmarks = useStore((s) => s.bookmarks);
@@ -10,8 +11,10 @@ export default function MaktabaSection() {
   return (
     <section
       id="maktaba"
-      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1100px]"
+      className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1100px] overflow-hidden"
     >
+      <SectionWatermark word="مکتبہ" position="right" />
+      <SectionWatermark word="مکتبہ" position="right" />
       <SectionHeader
         eyebrow="✦ Apna Maktaba ✦"
         urdu="اپنا مکتبہ"
