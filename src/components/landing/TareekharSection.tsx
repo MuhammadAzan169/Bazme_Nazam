@@ -37,19 +37,6 @@ function SherReveal({ lines, poet }: { lines: string[]; poet: string }) {
         }}
       />
 
-      {/* ink-drop ornament top-right */}
-      <motion.span
-        aria-hidden
-        className="absolute top-3 left-4 font-urdu text-gold/20 select-none"
-        style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
-        initial={{ opacity: 0, scale: 0.6 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-      >
-        ؎
-      </motion.span>
-
       {/* sher lines */}
       <div className="mt-2 space-y-1">
         {allWords.map((words, li) => (

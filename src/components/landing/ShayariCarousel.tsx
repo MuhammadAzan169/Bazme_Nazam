@@ -124,15 +124,6 @@ export default function ShayariCarousel() {
             }}
           />
 
-          {/* decorative ink ornament */}
-          <span
-            aria-hidden
-            className="absolute top-4 right-7 font-urdu text-gold/[0.07] pointer-events-none select-none"
-            style={{ fontSize: "clamp(60px, 10vw, 110px)", lineHeight: 1 }}
-          >
-            ؎
-          </span>
-
           {/* sher lines */}
           <div className="relative z-10 min-h-[130px] sm:min-h-[160px] flex items-center justify-center">
             <AnimatePresence mode="wait" custom={direction}>

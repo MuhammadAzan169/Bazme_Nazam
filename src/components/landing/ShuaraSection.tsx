@@ -11,13 +11,14 @@ function PoetDetailModal({
   poet: Poet;
   onClose: () => void;
 }) {
-  // Lock body scroll while modal is open; restore on close/unmount
+  // Lock scroll without position:fixed — no page-jump on close
   useEffect(() => {
-    const scrollbarW = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = `${scrollbarW}px`;
+    const htmlEl = document.documentElement;
+    const scrollbarGap = window.innerWidth - htmlEl.clientWidth;
+    htmlEl.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarGap}px`;
     return () => {
-      document.body.style.overflow = "";
+      htmlEl.style.overflow = "";
       document.body.style.paddingRight = "";
     };
   }, []);

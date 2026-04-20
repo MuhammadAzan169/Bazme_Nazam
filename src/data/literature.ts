@@ -958,5 +958,4 @@ export const NAV_LINKS = [
   { label: "Shuara", labelUrdu: "شعراء", href: "#shuara" },
   { label: "Novels", labelUrdu: "ناول", href: "#novels" },
   { label: "Shayari", labelUrdu: "شاعری", href: "#shayari" },
-  { label: "Maktaba", labelUrdu: "مکتبہ", href: "#maktaba" },
 ];
