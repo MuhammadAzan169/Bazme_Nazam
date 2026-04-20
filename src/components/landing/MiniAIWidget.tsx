@@ -77,9 +77,10 @@ export default function MiniAIWidget() {
         transition={{ type: "spring", damping: 18, stiffness: 200, delay: 1.2 }}
         onClick={() => setOpen(!open)}
         aria-label="Open AI companion"
-        className="animate-widget-pulse fixed bottom-5 right-5 z-[300] flex h-14 w-14 items-center justify-center rounded-full text-[#1a0e00]"
+        className="animate-widget-pulse fixed bottom-5 right-5 z-[300] flex h-14 w-14 items-center justify-center rounded-full"
         style={{
-          background: "linear-gradient(135deg, #C8943A, #E0A84A)",
+          background: "var(--grad-gold)",
+          color: "hsl(var(--background))",
         }}
       >
         <AnimatePresence mode="wait">
@@ -124,16 +125,16 @@ export default function MiniAIWidget() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 26, stiffness: 200 }}
-              className="fixed z-[290] flex flex-col overflow-hidden border border-gold/15 bg-[hsl(var(--bg-secondary)/0.95)] backdrop-blur-xl shadow-2xl
+              className="fixed z-[290] flex flex-col overflow-hidden border border-primary/15 bg-[hsl(var(--bg-secondary)/0.95)] backdrop-blur-xl shadow-2xl
                 bottom-0 left-0 right-0 h-[60vh] rounded-t-3xl
-                sm:bottom-24 sm:right-5 sm:left-auto sm:h-[520px] sm:w-[380px] sm:rounded-2xl sm:border-gold/20"
+                sm:bottom-24 sm:right-5 sm:left-auto sm:h-[520px] sm:w-[380px] sm:rounded-2xl sm:border-primary/20"
             >
               {/* Mobile handle */}
               <div className="sm:hidden mx-auto mt-2 h-1 w-10 rounded-full bg-gold/30" />
 
               {/* Header */}
-              <div className="flex items-center gap-3 border-b border-gold/10 px-5 py-3.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold/15 text-gold">
+              <div className="flex items-center gap-3 border-b border-primary/15 px-5 py-3.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-primary">
                   <Feather size={16} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -141,7 +142,7 @@ export default function MiniAIWidget() {
                     Bazm AI · Mini
                   </p>
                   <p
-                    className="font-urdu text-xs text-gold/70"
+                    className="font-urdu text-xs text-primary/70"
                     dir="rtl"
                     lang="ur"
                   >
@@ -150,7 +151,7 @@ export default function MiniAIWidget() {
                 </div>
                 <button
                   onClick={() => navigate("/chatbot")}
-                  className="font-etched text-[10px] tracking-[0.14em] uppercase text-gold hover:underline"
+                  className="font-etched text-[10px] tracking-[0.14em] uppercase text-primary hover:underline"
                 >
                   Open Full ↗
                 </button>
@@ -169,25 +170,25 @@ export default function MiniAIWidget() {
                     className={
                       "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-[1.6] " +
                       (m.role === "user"
-                        ? "ml-auto bg-gold/15 text-foreground border border-gold/20"
-                        : "bg-[hsl(var(--bg-tertiary)/0.7)] border border-gold/10 text-secondary-warm")
+                        ? "ml-auto bg-primary/15 text-foreground border border-primary/25"
+                        : "bg-[hsl(var(--bg-tertiary)/0.7)] border border-primary/10 text-secondary-warm")
                     }
                   >
                     {m.text}
                   </motion.div>
                 ))}
                 {thinking && (
-                  <div className="flex items-center gap-1.5 px-2 text-gold">
+                  <div className="flex items-center gap-1.5 px-2 text-primary">
                     <span
-                      className="animate-dot-bounce h-1.5 w-1.5 rounded-full bg-current"
+                      className="animate-dot-bounce h-1.5 w-1.5 rounded-full bg-primary"
                       style={{ animationDelay: "0ms" }}
                     />
                     <span
-                      className="animate-dot-bounce h-1.5 w-1.5 rounded-full bg-current"
+                      className="animate-dot-bounce h-1.5 w-1.5 rounded-full bg-primary"
                       style={{ animationDelay: "160ms" }}
                     />
                     <span
-                      className="animate-dot-bounce h-1.5 w-1.5 rounded-full bg-current"
+                      className="animate-dot-bounce h-1.5 w-1.5 rounded-full bg-primary"
                       style={{ animationDelay: "320ms" }}
                     />
                   </div>
@@ -195,13 +196,13 @@ export default function MiniAIWidget() {
               </div>
 
               {/* Quick chips */}
-              <div className="border-t border-gold/10 px-3 pt-3">
+              <div className="border-t border-primary/15 px-3 pt-3">
                 <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
                   {QUICK_CHIPS.map((c) => (
                     <button
                       key={c.label}
                       onClick={() => send(c.label)}
-                      className="shrink-0 rounded-full border border-gold/15 bg-gold/[0.05] px-3 py-1.5 font-classical italic text-[11px] text-secondary-warm hover:text-gold transition-colors"
+                      className="shrink-0 rounded-full border border-primary/20 bg-primary/[0.05] px-3 py-1.5 font-classical italic text-[11px] text-secondary-warm hover:text-primary transition-colors"
                     >
                       {c.label}
                     </button>
@@ -215,13 +216,13 @@ export default function MiniAIWidget() {
                   e.preventDefault();
                   send(input);
                 }}
-                className="flex items-center gap-2 border-t border-gold/10 px-3 py-3"
+                className="flex items-center gap-2 border-t border-primary/15 px-3 py-3"
               >
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Apni baat likhein…"
-                  className="flex-1 rounded-full border border-gold/15 bg-[hsl(var(--bg-primary)/0.6)] px-4 py-2.5 text-sm text-foreground placeholder:text-tertiary-warm focus:border-gold/40 outline-none"
+                  className="flex-1 rounded-full border border-primary/20 bg-[hsl(var(--bg-primary)/0.6)] px-4 py-2.5 text-sm text-foreground placeholder:text-tertiary-warm focus:border-primary/50 outline-none"
                 />
                 <button
                   type="submit"
@@ -235,7 +236,7 @@ export default function MiniAIWidget() {
 
               <button
                 onClick={() => navigate("/chatbot")}
-                className="mb-3 mx-3 mt-1 inline-flex items-center justify-center gap-2 rounded-full border border-gold/15 bg-gold/[0.05] py-2 font-etched text-[10px] tracking-[0.18em] uppercase text-gold hover:bg-gold/10 transition-colors"
+                className="mb-3 mx-3 mt-1 inline-flex items-center justify-center gap-2 rounded-full border border-primary/20 bg-primary/[0.05] py-2 font-etched text-[10px] tracking-[0.18em] uppercase text-primary hover:bg-primary/10 transition-colors"
               >
                 Continue in Full Chatbot <ArrowRight size={12} />
               </button>

@@ -66,6 +66,7 @@
     --text-rose: 348 44% 70%;
 
     /* Glass surfaces (rgba — must stay near-transparent) */
+    --primary-rgb: 232 180 90;
     --bg-glass: 255 213 138 / 0.04;
     --bg-glass-strong: 255 213 138 / 0.07;
     --bg-glass-hover: 255 213 138 / 0.09;
@@ -95,13 +96,13 @@
     );
     --grad-card: linear-gradient(
       145deg,
-      rgb(232 180 90 / 0.05),
-      rgb(201 102 122 / 0.03)
+      rgb(var(--primary-rgb) / 0.05),
+      rgb(var(--primary-rgb) / 0.03)
     );
     --grad-divider: linear-gradient(
       90deg,
       transparent,
-      rgb(232 180 90 / 0.4),
+      rgb(var(--primary-rgb) / 0.4),
       transparent
     );
 
@@ -193,7 +194,7 @@
     background: rgb(var(--bg-glass-strong));
     backdrop-filter: blur(32px) saturate(200%);
     -webkit-backdrop-filter: blur(32px) saturate(200%);
-    border: 1px solid rgb(232 180 90 / 0.18);
+    border: 1px solid rgb(var(--primary-rgb) / 0.18);
     box-shadow: var(--glass-shadow), var(--glass-inset);
   }
 
@@ -201,7 +202,7 @@
     background: rgb(var(--navbar-glass-bg));
     backdrop-filter: blur(28px) saturate(200%);
     -webkit-backdrop-filter: blur(28px) saturate(200%);
-    border-bottom: 1px solid rgb(232 180 90 / 0.10);
+    border-bottom: 1px solid rgb(var(--primary-rgb) / 0.10);
     box-shadow: 0 4px 30px rgb(0 0 0 / 0.5);
   }
 
@@ -223,23 +224,23 @@
   .divider-gold {
     height: 1px;
     background: var(--grad-divider);
-    box-shadow: 0 0 12px rgb(232 180 90 / 0.3);
+    box-shadow: 0 0 12px rgb(var(--primary-rgb) / 0.3);
     border: none;
   }
 
   /* ── CTA button gradient ───────────────────────────────── */
   .btn-gold {
-    background: linear-gradient(135deg, #c8943a 0%, #e0a84a 50%, #b07828 100%);
-    color: #1a0e00;
+    background: var(--grad-gold);
+    color: hsl(var(--background));
     border: none;
     border-radius: var(--r-pill);
     font-weight: 600;
-    box-shadow: 0 4px 20px rgb(200 148 58 / 0.3);
+    box-shadow: 0 4px 20px rgb(var(--primary-rgb) / 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .btn-gold:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgb(200 148 58 / 0.5);
+    box-shadow: 0 8px 32px rgb(var(--primary-rgb) / 0.5);
   }
   .btn-gold:active {
     transform: scale(0.97);
@@ -301,8 +302,8 @@
   50%      { transform: translate(-50%, -50%) scale(1.04) rotate(1.5deg); }
 }
 @keyframes widgetPulse {
-  0%, 100% { box-shadow: 0 6px 28px rgb(232 180 90 / 0.4), 0 0 0 0 rgb(232 180 90 / 0.25); }
-  60%      { box-shadow: 0 6px 28px rgb(232 180 90 / 0.4), 0 0 0 14px rgb(232 180 90 / 0); }
+  0%, 100% { box-shadow: 0 6px 28px rgb(var(--primary-rgb) / 0.4), 0 0 0 0 rgb(var(--primary-rgb) / 0.25); }
+  60%      { box-shadow: 0 6px 28px rgb(var(--primary-rgb) / 0.4), 0 0 0 14px rgb(var(--primary-rgb) / 0); }
 }
 @keyframes dotBounce {
   0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
@@ -349,7 +350,7 @@
 
 /* ─── Selection ───────────────────────────────────────────── */
 ::selection {
-  background: rgb(232 180 90 / 0.2);
+  background: rgb(var(--primary-rgb) / 0.2);
   color: hsl(var(--text-gold));
 }
 
@@ -364,7 +365,7 @@
 @supports not (backdrop-filter: blur(1px)) {
   .glass, .glass-strong, .glass-navbar {
     background: rgb(13 10 20 / 0.94) !important;
-    border-color: rgb(232 180 90 / 0.12) !important;
+    border-color: rgb(var(--primary-rgb) / 0.12) !important;
   }
 }
 
@@ -436,9 +437,9 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgb(232 180 90 / 0.08) 20%,
-    rgb(232 180 90 / 0.22) 50%,
-    rgb(232 180 90 / 0.08) 80%,
+    rgb(var(--primary-rgb) / 0.08) 20%,
+    rgb(var(--primary-rgb) / 0.22) 50%,
+    rgb(var(--primary-rgb) / 0.08) 80%,
     transparent 100%
   );
 }

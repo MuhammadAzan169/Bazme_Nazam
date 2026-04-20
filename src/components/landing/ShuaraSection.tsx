@@ -3,7 +3,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { BookOpen, ChevronDown, Feather, Quote, X } from "lucide-react";
 import { POETS, type Poet } from "@/data/literature";
 import { SectionHeader } from "./TareekharSection";
-import SectionWatermark from "@/components/shared/SectionWatermark";
 
 function PoetDetailModal({
   poet,
@@ -351,7 +350,6 @@ export default function ShuaraSection() {
       id="shuara"
       className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1300px] overflow-hidden"
     >
-      <SectionWatermark word="شعراء" position="right" />
       <SectionHeader
         eyebrow="✦ Shuara-e-Urdu ✦"
         urdu="شعرائے اردو"

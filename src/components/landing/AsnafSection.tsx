@@ -3,7 +3,6 @@ import { ChevronDown, BookOpen, Feather, ScrollText } from "lucide-react";
 import { useState } from "react";
 import { ASNAF, type Asnaf } from "@/data/literature";
 import { SectionHeader } from "./TareekharSection";
-import SectionWatermark from "@/components/shared/SectionWatermark";
 
 function AsnafCard({ a, index }: { a: Asnaf; index: number }) {
   const [expanded, setExpanded] = useState(false);
@@ -149,7 +148,6 @@ export default function AsnafSection() {
       id="asnaf"
       className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1200px] overflow-hidden"
     >
-      <SectionWatermark word="اصناف" position="left" />
       <SectionHeader
         eyebrow="✦ Asnaf-e-Sukhan ✦"
         urdu="اصنافِ سخن"

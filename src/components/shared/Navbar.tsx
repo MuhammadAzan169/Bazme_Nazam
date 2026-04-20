@@ -109,8 +109,8 @@ export default function Navbar({ variant = "landing" }: Props) {
                 onClick={() => navigate("/chatbot")}
                 className="btn-gold whitespace-nowrap font-body text-[12px] sm:text-[13px] px-4 sm:px-6 py-2 sm:py-2.5"
               >
-                <span className="hidden sm:inline">AI se Baat Karein ↗</span>
-                <span className="sm:hidden">AI ✦</span>
+                <span className="hidden sm:inline">بزمِ ادب · Chatbot ↗</span>
+                <span className="sm:hidden">ادب ✦</span>
               </motion.button>
             ) : (
               <button
@@ -199,7 +199,7 @@ export default function Navbar({ variant = "landing" }: Props) {
               }}
               className="btn-gold mt-6 px-10 py-3.5 text-sm"
             >
-              AI se Baat Karein ✦
+              بزمِ ادب · Chatbot ✦
             </motion.button>
           </motion.div>
         )}

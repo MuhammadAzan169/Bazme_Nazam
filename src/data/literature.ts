@@ -1,3 +1,28 @@
+// ── Image imports ───────────────────────────────────────────────
+import poetGhalib from "@/assets/poet-ghalib.jpg";
+import poetMir from "@/assets/poet-mir.jpg";
+import poetIqbal from "@/assets/poet-iqbal.jpg";
+import poetFaiz from "@/assets/poet-faiz.jpg";
+import poetFaraz from "@/assets/poet-faraz.jpg";
+import poetJaun from "@/assets/poet-jaun.jpg";
+import poetSahir from "@/assets/poet-sahir.jpg";
+import poetJalib from "@/assets/poet-jalib.jpg";
+import bookPeerEKamil from "@/assets/book-peer-e-kamil.jpg";
+import bookJabZindagi from "@/assets/book-jab-zindagi.jpg";
+import bookUmraoJanAda from "@/assets/book-umrao-jan-ada.jpg";
+import bookRajaGidh from "@/assets/book-raja-gidh.jpg";
+import bookDivanEGhalib from "@/assets/book-divan-e-ghalib.jpg";
+import bookBangEDra from "@/assets/book-bang-e-dra.jpg";
+import bookFazailEAmaal from "@/assets/book-fazail-e-amaal.png";
+import bookBahishtiZewar from "@/assets/book-bahishti-zewar.jpg";
+import bookQasasUlAnbiya from "@/assets/book-qasas-ul-anbiya.jpg";
+import bookAabEHayat from "@/assets/book-aab-e-hayat.jpg";
+import bookKhushbu from "@/assets/book-khushbu.jpg";
+import bookMantoAfsane from "@/assets/book-manto-afsane.jpg";
+import bookShikwaJawab from "@/assets/book-shikwa-jawab.jpg";
+import bookJannatKePattay from "@/assets/book-jannat-ke-pattay.jpg";
+import bookNamal from "@/assets/book-namal.jpg";
+
 // ── Eras ────────────────────────────────────────────────────────
 export interface Era {
   id: string;
@@ -376,7 +401,7 @@ export const POETS: Poet[] = [
     knownFor: "Divan-e-Ghalib, his letters, the philosophy of desire",
     sher: ["ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے", "بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے"],
     imgColor: "linear-gradient(135deg, #2A1845, #E8B45A15)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mirza_Asadullah_Khan_Ghalib.jpg/440px-Mirza_Asadullah_Khan_Ghalib.jpg",
+    wikiImg: poetGhalib,
     fallbackLetter: "غ",
     fullBio: "Mirza Asadullah Baig Khan (1797-1869), known by his pen name Ghalib, was born in Agra to a family of Turkish descent. Orphaned young, he was raised by his uncle. Married at 13, he moved to Delhi and entered the literary circles of the Mughal court. His Persian diwan was his pride, but it is his Urdu ghazals that have made him immortal. He lived through the 1857 War of Independence and documented the destruction of Delhi in his diary 'Dastanbu'. Despite lifelong financial troubles, court intrigues, and personal tragedies (all seven children died in infancy), his wit and literary genius never dimmed. He is buried in Nizamuddin, Delhi.",
     topWorks: [
@@ -402,7 +427,7 @@ export const POETS: Poet[] = [
     knownFor: "Six Divans, mastery of rekhta, raw emotional authenticity",
     sher: ["مجھ کو شاعر نہ کہو میر کہ صاحب میں نے", "درد و غم کتنے کیے جمع تو دیوان کیا"],
     imgColor: "linear-gradient(135deg, #1A1A2E, #C9667A15)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Mir_Taqi_Mir.jpg/440px-Mir_Taqi_Mir.jpg",
+    wikiImg: poetMir,
     fallbackLetter: "م",
     fullBio: "Born in Agra in 1723, Mir witnessed his father die when he was young, and this early grief coloured everything he wrote. He moved to Delhi and quickly became the greatest poet of his age. When Delhi was devastated by invasions, Mir migrated to Lucknow. Ghalib himself said: 'Rekhta ke tum hi ustad nahin ho Ghalib / Kehte hain agle zamane mein koi Mir bhi tha.' Mir composed six divans — an unmatched volume.",
     topWorks: [
@@ -426,7 +451,7 @@ export const POETS: Poet[] = [
     knownFor: "Bang-e-Dra, Bal-e-Jibreel, Shikwa & Jawab-e-Shikwa",
     sher: ["خودی کو کر بلند اتنا کہ ہر تقدیر سے پہلے", "خدا بندے سے خود پوچھے بتا تیری رضا کیا ہے"],
     imgColor: "linear-gradient(135deg, #0D2340, #D49A3E15)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Allama_Iqbal.jpg/440px-Allama_Iqbal.jpg",
+    wikiImg: poetIqbal,
     fallbackLetter: "ا",
     fullBio: "Born in Sialkot in 1877, Muhammad Iqbal studied philosophy in Cambridge and Munich. He returned to Lahore and transformed Urdu literature with his philosophy of Khudi (selfhood). His Allahabad Address (1930) envisioned a separate Muslim state. He died in 1938, nine years before Pakistan was created. His birthday (Nov 9) is a public holiday in Pakistan.",
     topWorks: [
@@ -452,7 +477,7 @@ export const POETS: Poet[] = [
     knownFor: "Naqsh-e-Faryadi, Dast-e-Saba, Zindan-Nama; \"Hum Dekhenge\"",
     sher: ["مجھ سے پہلی سی محبت مرے محبوب نہ مانگ", "میں نے سمجھا تھا کہ تو ہے تو درخشاں ہے حیات"],
     imgColor: "linear-gradient(135deg, #1A0E2E, #C9667A18)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Faiz_Ahmed_Faiz_%28cropped%29.jpg/440px-Faiz_Ahmed_Faiz_%28cropped%29.jpg",
+    wikiImg: poetFaiz,
     fallbackLetter: "ف",
     fullBio: "Born in Sialkot in 1911, Faiz studied Arabic, English, and philosophy. Arrested in 1951 in the Rawalpindi Conspiracy Case, he spent four years in prison — writing some of his finest verse. His poetry uniquely fused romantic imagery with revolutionary politics. He was nominated for the Nobel Prize and received the Lenin Peace Prize in 1962.",
     topWorks: [
@@ -478,7 +503,7 @@ export const POETS: Poet[] = [
     knownFor: "Tanha Tanha, Dard Aashob, exile and defiance",
     sher: ["رنجش ہی سہی دل ہی دکھانے کے لیے آ", "آ پھر سے مجھے چھوڑ کے جانے کے لیے آ"],
     imgColor: "linear-gradient(135deg, #1E1030, #E8778A15)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Ahmad_Faraz.jpg/440px-Ahmad_Faraz.jpg",
+    wikiImg: poetFaraz,
     fallbackLetter: "ف",
     fullBio: "Ahmad Faraz (1931-2008), born Syed Ahmad Shah in Kohat, was one of the most popular Urdu poets of the 20th century. During Zia ul-Haq's martial law, his outspoken poetry led to exile in Europe. His ghazals — passionate, accessible, and deeply musical — made him a household name. He received the Hilal-e-Imtiaz.",
     topWorks: [
@@ -494,30 +519,6 @@ export const POETS: Poet[] = [
     legacy: "His mushaira performances drew crowds of thousands. 'Ranjish Hi Sahi' remains one of the most performed ghazals.",
   },
   {
-    id: "parveen",
-    nameUrdu: "پروین شاکرؔ",
-    nameEng: "Parveen Shakir",
-    years: "1952 – 1994",
-    era: "Modern",
-    bio: "The woman who wrote the female experience into Urdu poetry with full authority.",
-    knownFor: "Khushbu, Sad Barg, Inkaar — feminist voice in Urdu literature",
-    sher: ["کچھ اشک تھے آنکھوں میں ابھی اور بھی بہنے تھے", "کچھ لفظ تھے ہونٹوں پر ابھی اور بھی کہنے تھے"],
-    imgColor: "linear-gradient(135deg, #2E0A1A, #E8778A15)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Parveen_Shakir.jpg/440px-Parveen_Shakir.jpg",
-    fallbackLetter: "پ",
-    fullBio: "Parveen Shakir (1952-1994) was born in Karachi and earned multiple degrees including an MPA from Harvard. Her debut 'Khushbu' (1976) was initially rejected as 'too personal' — it went on to be reprinted 40+ times. She died tragically in a car accident at 42.",
-    topWorks: [
-      { title: "Khushbu", titleUrdu: "خوشبو", year: "1976", description: "Her revolutionary debut. The female voice in Urdu poetry was never the same after this." },
-      { title: "Sad Barg", titleUrdu: "صد برگ", year: "1980", description: "Hundred petals — deeper, more mature, equally beloved." },
-      { title: "Inkaar", titleUrdu: "انکار", year: "1990", description: "Refusal — poetry of a woman who will not be silenced." },
-    ],
-    famousAshaar: [
-      { lines: ["کچھ اشک تھے آنکھوں میں ابھی اور بھی بہنے تھے", "کچھ لفظ تھے ہونٹوں پر ابھی اور بھی کہنے تھے"], context: "On words left unsaid" },
-    ],
-    style: "Intimate, feminine, revolutionary in its ordinariness.",
-    legacy: "Opened the door for all female Urdu poets who followed.",
-  },
-  {
     id: "jaun",
     nameUrdu: "جونؔ ایلیا",
     nameEng: "Jaun Elia",
@@ -527,7 +528,7 @@ export const POETS: Poet[] = [
     knownFor: "Shayad, Yaani, Lekin, Goya",
     sher: ["میں نے بہت کھویا ہے اپنے آپ کو پانے میں", "اور جو پایا وہ بھی کھو دیا دیوانے میں"],
     imgColor: "linear-gradient(135deg, #0A0A20, #6B5BD618)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Jaun_Elia.jpg/440px-Jaun_Elia.jpg",
+    wikiImg: poetJaun,
     fallbackLetter: "ج",
     fullBio: "Jaun Elia (1931-2002) was born in Amroha, India. A polyglot who read Hebrew, Sanskrit, Arabic, and Persian, he lived as a deliberate outcast. His mushaira performances were legendary. His four collections were published posthumously, and social media turned him into a phenomenon.",
     topWorks: [
@@ -552,7 +553,7 @@ export const POETS: Poet[] = [
     knownFor: "Talkhiyan, 700+ Bollywood songs, Pyaasa, Kabhi Kabhi",
     sher: ["یہ دنیا اگر مل بھی جائے تو کیا ہے", "یہ دنیا بڑی بے وفا ہے میرے ہم نشیں"],
     imgColor: "linear-gradient(135deg, #1A1000, #F5C84215)",
-    wikiImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Sahir_Ludhianvi.jpg/440px-Sahir_Ludhianvi.jpg",
+    wikiImg: poetSahir,
     fallbackLetter: "س",
     fullBio: "Born Abdul Hayee in Ludhiana in 1921, Sahir took his pen name meaning 'magician'. He became a leading Progressive poet and then entered Bollywood, where his film lyrics became the most powerful vehicle for social messaging in Indian cinema. He wrote over 700 songs while never compromising his literary standards.",
     topWorks: [
@@ -566,6 +567,32 @@ export const POETS: Poet[] = [
     ],
     style: "Accessible, musical, politically charged. Made Marxist ideas sing.",
     legacy: "Proved that popular art and high literature need not be enemies.",
+  },
+  {
+    id: "jalib",
+    nameUrdu: "حبیب جالبؔ",
+    nameEng: "Habib Jalib",
+    years: "1928 – 1993",
+    era: "Modern",
+    bio: "The poet of the streets. He spoke truth to power so fearlessly that dictators jailed him — and the people made him immortal.",
+    knownFor: "Dastoor, Musheer, revolutionary protest poetry",
+    sher: ["ایسے دستور کو صبح بے نور کو", "میں نہیں مانتا میں نہیں مانتا"],
+    imgColor: "linear-gradient(135deg, #1A0A00, #D4400015)",
+    wikiImg: poetJalib,
+    fallbackLetter: "ج",
+    fullBio: "Habib Jalib (1928-1993) was born in Hoshiarpur, Punjab. He became Pakistan's most celebrated protest poet — imprisoned multiple times under Ayub Khan, Yahya Khan, and Zia ul-Haq for his defiant verse. Where other poets used metaphor, Jalib used the hammer. His poem 'Dastoor' (written against Ayub Khan's constitution in 1962) became the anthem of every pro-democracy movement in Pakistan's history. He died in poverty, beloved by the people he fought for.",
+    topWorks: [
+      { title: "Dastoor", titleUrdu: "دستور", year: "1962", description: "The most famous protest poem in Urdu. Written against Ayub Khan's constitution — recited at every democratic uprising since." },
+      { title: "Barg-e-Aawara", titleUrdu: "برگِ آوارہ", year: "1958", description: "Wandering leaf — his debut collection, already burning with social fire." },
+      { title: "Sar-e-Maqtal", titleUrdu: "سرِ مقتل", year: "1966", description: "At the place of execution — poetry written from prison and the edge of danger." },
+    ],
+    famousAshaar: [
+      { lines: ["ایسے دستور کو صبح بے نور کو", "میں نہیں مانتا میں نہیں مانتا"], context: "From Dastoor — refusal to accept an unjust constitution" },
+      { lines: ["تم سے پہلے وہ جو اک شخص یہاں تخت نشیں تھا", "اس کو بھی اپنا یقیں تھا کہ یہی حق ہے یہی دیں ہے"], context: "On the self-delusion of tyrants" },
+      { lines: ["کیا دیکھتا ہوں میں یہ جہاں دیکھ کر", "رو رہا ہوں میں اپنا وطن دیکھ کر"], context: "On grief for a nation's suffering" },
+    ],
+    style: "Direct, furious, musical. No ambiguity — every word a stone thrown at power.",
+    legacy: "Pakistan's conscience in verse. His poems are chanted at protests to this day.",
   },
 ];
 
@@ -601,7 +628,7 @@ export const BOOKS: Book[] = [
     description: "A spiritual journey of two souls — Imama and Salar — whose lives collide through faith, rebellion, and the search for a perfect guide.",
     themes: ["Faith", "Redemption", "Love", "Identity"],
     cover: "linear-gradient(135deg, #1a0a2e, #4a2060)",
-    coverImg: "https://covers.openlibrary.org/b/isbn/9789690023414-L.jpg?default=false",
+    coverImg: bookPeerEKamil,
     iconicLine: "انسان کی سب سے بڑی غلطی یہ ہے کہ وہ خدا کو بھول جاتا ہے",
     detailedSynopsis: "Imama Hashim, an Ahmadi girl who converts to Sunni Islam, and Salar Sikander, a genius drowning in arrogance, are connected by fate. Their parallel journeys eventually converge in a story about the meaning of a 'perfect guide'.",
     whyRead: "The most-read Urdu novel of the 21st century. Translated into 20+ languages.",
@@ -618,7 +645,7 @@ export const BOOKS: Book[] = [
     description: "A deeply moving account of the afterlife through the lens of Islamic belief. Philosophical depth meets extraordinary narrative clarity.",
     themes: ["Afterlife", "Faith", "Accountability", "Hope"],
     cover: "linear-gradient(135deg, #0a1a2e, #1a4060)",
-    coverImg: null,
+    coverImg: bookJabZindagi,
     iconicLine: "موت زندگی کا انت نہیں، بلکہ اصل زندگی کا آغاز ہے",
     whyRead: "Made millions re-examine their relationship with mortality.",
   },
@@ -634,7 +661,7 @@ export const BOOKS: Book[] = [
     description: "The first great Urdu novel. A courtesan's life in Lucknow's twilight years — lush, melancholic, feminist before the word existed.",
     themes: ["Fate", "Womanhood", "Loss", "Lucknow culture"],
     cover: "linear-gradient(135deg, #2a1000, #6a3000)",
-    coverImg: "https://covers.openlibrary.org/b/isbn/969350674X-L.jpg?default=false",
+    coverImg: bookUmraoJanAda,
     iconicLine: "میری زندگی ایک ایسی کتاب ہے جسے لکھنے والے نے خود نہیں پڑھا",
     whyRead: "The founding novel of Urdu literature.",
   },
@@ -650,7 +677,7 @@ export const BOOKS: Book[] = [
     description: "A metaphysical masterwork. The vulture as a symbol of forbidden desire — philosophy, psychology, and mysticism woven together.",
     themes: ["Forbidden desire", "Metaphysics", "Sufism"],
     cover: "linear-gradient(135deg, #1a2a0a, #3a4a1a)",
-    coverImg: null,
+    coverImg: bookRajaGidh,
     iconicLine: "جب انسان حرام کی طرف قدم بڑھاتا ہے تو اندر سے گدھ بن جاتا ہے",
     whyRead: "Combines Sufi thought with modern psychology like no other Urdu novel.",
   },
@@ -666,7 +693,7 @@ export const BOOKS: Book[] = [
     description: "The most studied, debated, and beloved poetry collection in Urdu literature. 234 ghazals containing multitudes.",
     themes: ["Ghazal", "Philosophy", "Mystic thought"],
     cover: "linear-gradient(135deg, #2A1845, #E8B45A22)",
-    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mirza_Asadullah_Khan_Ghalib.jpg/440px-Mirza_Asadullah_Khan_Ghalib.jpg",
+    coverImg: bookDivanEGhalib,
     iconicLine: "ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے",
     whyRead: "The Bible of Urdu poetry. Every serious student begins and ends here.",
   },
@@ -682,7 +709,7 @@ export const BOOKS: Book[] = [
     description: "Iqbal's first Urdu collection — Shikwa, Jawab-e-Shikwa, Tarana-e-Hindi, and dozens of poems that shaped national consciousness.",
     themes: ["Khudi", "Islamic revival", "Awakening"],
     cover: "linear-gradient(135deg, #0D2340, #D49A3E22)",
-    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Allama_Iqbal.jpg/440px-Allama_Iqbal.jpg",
+    coverImg: bookBangEDra,
     iconicLine: "لب پہ آتی ہے دعا بن کے تمنا میری",
     whyRead: "Contains the poems that changed the political consciousness of a billion people.",
   },
@@ -698,7 +725,7 @@ export const BOOKS: Book[] = [
     description: "Parveen Shakir's debut that changed Urdu poetry forever. The female experience written with unprecedented directness.",
     themes: ["Feminine voice", "Longing", "Urban life"],
     cover: "linear-gradient(135deg, #2E0A1A, #E8778A22)",
-    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Parveen_Shakir.jpg/440px-Parveen_Shakir.jpg",
+    coverImg: bookKhushbu,
     iconicLine: "خوشبو کی طرح پھیل گئی ہے میری محبت",
     whyRead: "The book that proved women could redefine Urdu poetry.",
   },
@@ -714,7 +741,7 @@ export const BOOKS: Book[] = [
     description: "Manto ripped the curtain from Partition violence and hypocrisy. Tried for obscenity six times, acquitted each time.",
     themes: ["Partition", "Human condition", "Colonial violence"],
     cover: "linear-gradient(135deg, #2a0a0a, #5a1a1a)",
-    coverImg: null,
+    coverImg: bookMantoAfsane,
     iconicLine: "اگر آپ میری کہانیاں نہیں سہہ سکتے تو زمانہ ناقابلِ برداشت ہے",
     whyRead: "To understand Partition, start with Manto. To understand humanity, also start with Manto.",
   },
@@ -730,7 +757,7 @@ export const BOOKS: Book[] = [
     description: "Shikwa is a Muslim's complaint to God — bold, devastating. Jawab-e-Shikwa is God's reply. Together, one of the great dialogues in world literature.",
     themes: ["Theology", "Divine dialogue", "Khudi"],
     cover: "linear-gradient(135deg, #0D2340, #A87A3022)",
-    coverImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Allama_Iqbal.jpg/440px-Allama_Iqbal.jpg",
+    coverImg: bookShikwaJawab,
     iconicLine: "تجھے یاد ہو کہ نہ یاد ہو، مجھے یاد ہے",
     whyRead: "The boldest theological poem in Urdu. A believer's complaint to God — and God answers.",
   },
@@ -746,7 +773,7 @@ export const BOOKS: Book[] = [
     description: "A widely-read collection of Hadith compilations and stories encouraging good deeds. Read in Tablighi gatherings worldwide.",
     themes: ["Hadith", "Good deeds", "Faith", "Prayer"],
     cover: "linear-gradient(135deg, #0a2a1a, #1a4a2a)",
-    coverImg: null,
+    coverImg: bookFazailEAmaal,
     iconicLine: "ہر نیکی کا بدلہ اللہ کے یہاں محفوظ ہے",
     whyRead: "One of the most widely-read Islamic books in the world.",
   },
@@ -762,7 +789,7 @@ export const BOOKS: Book[] = [
     description: "Heavenly Ornaments — a comprehensive guide to Islamic life. For over a century, it was given to brides as an essential wedding gift across South Asia.",
     themes: ["Islamic jurisprudence", "Women's guide", "Daily life", "Fiqh"],
     cover: "linear-gradient(135deg, #1a2a0a, #2a4a1a)",
-    coverImg: null,
+    coverImg: bookBahishtiZewar,
     iconicLine: "عورت کی عزت اس کے علم اور تقویٰ میں ہے",
     whyRead: "A century-old guide that shaped how millions of Muslim women understood their faith.",
   },
@@ -778,7 +805,7 @@ export const BOOKS: Book[] = [
     description: "Stories of the Prophets — from Adam to Muhammad ﷺ. Its Urdu translations have been a cornerstone of Islamic education in South Asia.",
     themes: ["Prophetic stories", "Islamic history", "Faith", "Lessons"],
     cover: "linear-gradient(135deg, #1a1a2e, #2a2a4e)",
-    coverImg: null,
+    coverImg: bookQasasUlAnbiya,
     iconicLine: "ہر نبی کی کہانی میں نسلِ انسانی کے لیے سبق ہے",
     whyRead: "The prophets' stories told with scholarly depth. Essential Islamic reading.",
   },
@@ -794,7 +821,7 @@ export const BOOKS: Book[] = [
     description: "The Water of Life — the first comprehensive history of Urdu poetry. Literary criticism, biography, and beautiful prose combined.",
     themes: ["Literary history", "Poetry criticism", "Biography"],
     cover: "linear-gradient(135deg, #2a1a0a, #4a3a1a)",
-    coverImg: null,
+    coverImg: bookAabEHayat,
     iconicLine: "شاعری وہ آب حیات ہے جو زبان کو زندہ رکھتی ہے",
     whyRead: "The foundational text of Urdu literary criticism.",
   },
@@ -810,7 +837,7 @@ export const BOOKS: Book[] = [
     description: "A gripping thriller interweaving ISI intelligence, Turkish history, and a Quranic mystery.",
     themes: ["Espionage", "Faith", "Ottoman history", "Adventure"],
     cover: "linear-gradient(135deg, #0a2a2e, #1a4a4e)",
-    coverImg: null,
+    coverImg: bookJannatKePattay,
     iconicLine: "اللہ کے راز ان لوگوں پر کھلتے ہیں جو ان کی تلاش میں نکلتے ہیں",
     whyRead: "Proved Urdu fiction could compete with international thrillers.",
   },
@@ -826,7 +853,7 @@ export const BOOKS: Book[] = [
     description: "An epic saga — murder, corruption, love, and redemption. Every chapter begins with a Quranic verse mirroring the plot.",
     themes: ["Justice", "Corruption", "Faith", "Redemption"],
     cover: "linear-gradient(135deg, #2a1a2e, #4a2a4e)",
-    coverImg: null,
+    coverImg: bookNamal,
     iconicLine: "ہر ظلم کا حساب ہے، ہر آنسو کا حساب ہے",
     whyRead: "At 900+ pages, the most ambitious modern Urdu novel.",
   },

@@ -18,7 +18,7 @@ export default function SectionWatermark({ word, position = "right" }: Props) {
       style={{
         fontSize: "clamp(100px, 18vw, 200px)",
         lineHeight: 1,
-        color: "hsl(var(--gold-main) / 0.025)",
+        color: "hsl(var(--gold-main) / 0.055)",
         userSelect: "none",
       }}
     >

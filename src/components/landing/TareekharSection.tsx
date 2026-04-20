@@ -2,17 +2,98 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Calendar, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { ERAS, type Era } from "@/data/literature";
-import { useTypewriter } from "@/hooks/useTypewriter";
-import SectionWatermark from "@/components/shared/SectionWatermark";
+
+/* ── Word-by-word blur-reveal for the sher ─────────────────────────── */
+const wordVariants = {
+  hidden: { opacity: 0, filter: "blur(10px)", y: 12 },
+  show: (i: number) => ({
+    opacity: 1,
+    filter: "blur(0px)",
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 0.68, 0.2, 1], delay: i * 0.07 },
+  }),
+};
+
+function SherReveal({ lines, poet }: { lines: string[]; poet: string }) {
+  const allWords = lines.map((l) => l.split(" "));
+  let globalIdx = 0;
+
+  return (
+    <motion.div
+      className="relative overflow-hidden rounded-md border border-gold/10 bg-gold/[0.04] p-5 sm:p-6"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.6 }}
+    >
+      {/* ambient shimmer sweep */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-md"
+        style={{
+          background:
+            "linear-gradient(105deg, transparent 35%, rgb(var(--primary-rgb) / 0.07) 50%, transparent 65%)",
+          backgroundSize: "220% 100%",
+          animation: "shimmerSweep 5s linear infinite",
+        }}
+      />
+
+      {/* ink-drop ornament top-right */}
+      <motion.span
+        aria-hidden
+        className="absolute top-3 left-4 font-urdu text-gold/20 select-none"
+        style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+        initial={{ opacity: 0, scale: 0.6 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+      >
+        ؎
+      </motion.span>
+
+      {/* sher lines */}
+      <div className="mt-2 space-y-1">
+        {allWords.map((words, li) => (
+          <p
+            key={li}
+            dir="rtl"
+            lang="ur"
+            className="font-urdu text-gold text-right leading-[2.4]"
+            style={{ fontSize: "clamp(15px, 1.9vw, 20px)" }}
+          >
+            {words.map((word) => {
+              const idx = globalIdx++;
+              return (
+                <motion.span
+                  key={idx}
+                  custom={idx}
+                  variants={wordVariants}
+                  className="inline-block mx-[3px]"
+                >
+                  {word}
+                </motion.span>
+              );
+            })}
+          </p>
+        ))}
+      </div>
+
+      {/* divider + attribution */}
+      <motion.div
+        className="mt-4 flex items-center gap-3 justify-end"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: allWords.flat().length * 0.07 + 0.3, duration: 0.6 }}
+      >
+        <div className="h-px flex-1 max-w-[60px]" style={{ background: "var(--grad-divider)" }} />
+        <p className="font-classical italic text-tertiary-warm text-xs">— {poet}</p>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 function EraCard({ era, index }: { era: Era; index: number }) {
   const [expanded, setExpanded] = useState(false);
-  const { displayText, phase } = useTypewriter(era.sher.lines, {
-    typeSpeed: 70,
-    deleteSpeed: 35,
-    holdDuration: 3200,
-    pauseBetween: 700,
-  });
 
   return (
     <motion.div
@@ -71,39 +152,9 @@ function EraCard({ era, index }: { era: Era; index: number }) {
           {era.description}
         </p>
 
-        {/* Two-column: Sher + Portrait */}
-        <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto]">
-          <div className="rounded-md border border-gold/10 bg-gold/[0.04] p-4 sm:p-5 min-h-[110px] flex flex-col justify-center">
-            <p
-              dir="rtl"
-              lang="ur"
-              className={
-                "typewriter-text font-urdu text-gold text-right leading-[2.2] " +
-                (phase === "deleting" ? "deleting" : "")
-              }
-              style={{ fontSize: "clamp(15px, 1.9vw, 19px)" }}
-            >
-              {displayText}
-            </p>
-            <p className="font-classical italic text-tertiary-warm text-right text-xs mt-2">
-              — {era.sher.poet}
-            </p>
-          </div>
-
-          {era.authorImg && (
-            <div className="hidden md:block w-[120px] h-[120px] rounded-md overflow-hidden border border-gold/15 self-start">
-              <img
-                src={era.authorImg}
-                alt={`${era.poets[0]} portrait`}
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover"
-                style={{
-                  filter: "sepia(30%) contrast(105%) brightness(0.82) saturate(0.8)",
-                }}
-              />
-            </div>
-          )}
+        {/* Sher reveal */}
+        <div className="mt-5">
+          <SherReveal lines={era.sher.lines} poet={era.sher.poet} />
         </div>
 
         {/* Poets chips */}
@@ -208,7 +259,6 @@ export default function TareekharSection() {
       id="tareekh"
       className="relative py-20 sm:py-32 px-5 sm:px-12 mx-auto max-w-[1100px] overflow-hidden"
     >
-      <SectionWatermark word="تاریخ" position="right" />
       <SectionHeader
         eyebrow="✦ Tareekh-e-Adab ✦"
         urdu="تاریخِ ادب"
@@ -220,7 +270,7 @@ export default function TareekharSection() {
         {/* Vertical timeline line */}
         <div
           className="absolute left-[14px] top-0 bottom-0 hidden sm:block w-px"
-          style={{ background: "linear-gradient(180deg, transparent, rgb(232 180 90 / 0.3), transparent)" }}
+          style={{ background: "linear-gradient(180deg, transparent, rgb(var(--primary-rgb) / 0.3), transparent)" }}
           aria-hidden
         />
         <div className="flex flex-col gap-8">

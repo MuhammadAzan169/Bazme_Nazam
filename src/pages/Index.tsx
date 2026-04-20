@@ -11,7 +11,6 @@ const AsnafSection = lazy(() => import("@/components/landing/AsnafSection"));
 const ShuaraSection = lazy(() => import("@/components/landing/ShuaraSection"));
 const NovelsSection = lazy(() => import("@/components/landing/NovelsSection"));
 const ShayariCarousel = lazy(() => import("@/components/landing/ShayariCarousel"));
-const MaktabaSection = lazy(() => import("@/components/landing/MaktabaSection"));
 const MiniAIWidget = lazy(() => import("@/components/landing/MiniAIWidget"));
 
 const SectionFallback = () => (
@@ -86,11 +85,6 @@ const LandingPage = () => {
         <hr className="section-sep mx-4 sm:mx-8" />
         <Suspense fallback={<SectionFallback />}>
           <ShayariCarousel />
-        </Suspense>
-
-        <hr className="section-sep mx-4 sm:mx-8" />
-        <Suspense fallback={<SectionFallback />}>
-          <MaktabaSection />
         </Suspense>
 
         <Footer />
