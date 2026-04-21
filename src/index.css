@@ -166,14 +166,23 @@
     background: hsl(var(--bg-void));
   }
 
-  /* Urdu / Nastaliq — generous line-height prevents character clipping.
-     Inline styles and Tailwind utility classes will still override this. */
+  /* Urdu / Nastaliq — generous line-height + padding prevents glyph clipping.
+     Noto Nastaliq glyphs extend significantly above and below the baseline;
+     padding gives them room. overflow:visible ensures parent clips don't hide them. */
   [lang="ur"] {
-    line-height: 2.2;
+    line-height: 2.4;
     overflow: visible;
     word-break: keep-all;
     overflow-wrap: normal;
     text-align: right;
+    padding-top: 0.25em;
+    padding-bottom: 0.35em;
+    display: inline-block;
+  }
+
+  /* Block-level Urdu containers (p, div, h2, h3 etc.) should not shrink to inline */
+  p[lang="ur"], div[lang="ur"], h1[lang="ur"], h2[lang="ur"], h3[lang="ur"] {
+    display: block;
   }
 
   /* Noise grain overlay */
@@ -228,6 +237,15 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
+  }
+
+  /* When Urdu text uses gradient clip, the padding on [lang="ur"] would be
+     outside the clipped background area — compensate by using a larger
+     background-size so the gradient always covers the full glyph area. */
+  [lang="ur"].text-grad-gold {
+    padding-top: 0.3em;
+    padding-bottom: 0.45em;
+    display: block;
   }
 
   /* ── Glowing divider ───────────────────────────────────── */

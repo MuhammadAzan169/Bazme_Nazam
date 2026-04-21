@@ -90,7 +90,7 @@ function AsnafModal({ a, onClose }: { a: Asnaf; onClose: () => void }) {
             <div className="flex items-start gap-3 flex-shrink-0">
               <p
                 className="font-urdu text-grad-gold text-right"
-                style={{ fontSize: "clamp(28px, 4vw, 52px)", lineHeight: 1.7 }}
+                style={{ fontSize: "clamp(28px, 4vw, 52px)", lineHeight: 2.4, overflow: "visible" }}
                 dir="rtl"
                 lang="ur"
               >

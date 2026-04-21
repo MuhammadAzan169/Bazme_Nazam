@@ -324,7 +324,7 @@ export function SectionHeader({
       </motion.p>
 
       {/* Heading row: English on the left, Urdu on the right */}
-      <div className="flex items-center justify-between gap-6 flex-wrap">
+      <div className="flex items-center justify-between gap-6 flex-wrap overflow-visible">
         {/* English title — left */}
         <motion.h3
           initial={{ opacity: 0, x: -18 }}
@@ -349,7 +349,7 @@ export function SectionHeader({
           dir="rtl"
           lang="ur"
           className="font-urdu text-grad-gold text-right"
-          style={{ fontSize: "clamp(28px, 4.5vw, 54px)", lineHeight: 1.8 }}
+          style={{ fontSize: "clamp(28px, 4.5vw, 54px)", lineHeight: 2.4, overflow: "visible" }}
         >
           {urdu}
         </motion.h2>
