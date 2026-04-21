@@ -32,7 +32,7 @@ function SherLines({ lines, cardKey }: { lines: string[]; cardKey: string }) {
           key={li}
           dir="rtl"
           lang="ur"
-          className="font-urdu text-gold text-right leading-[2.5]"
+          className="font-urdu text-gold text-center leading-[2.5]"
           style={{ fontSize: "clamp(18px, 2.8vw, 28px)" }}
         >
           {words.map((word) => {
@@ -124,6 +124,15 @@ export default function ShayariCarousel() {
             }}
           />
 
+          {/* decorative ink ornament */}
+          <span
+            aria-hidden
+            className="absolute top-4 right-7 font-urdu text-gold/[0.07] pointer-events-none select-none"
+            style={{ fontSize: "clamp(60px, 10vw, 110px)", lineHeight: 1 }}
+          >
+            ؎
+          </span>
+
           {/* sher lines */}
           <div className="relative z-10 min-h-[130px] sm:min-h-[160px] flex items-center justify-center">
             <AnimatePresence mode="wait" custom={direction}>
@@ -153,12 +162,17 @@ export default function ShayariCarousel() {
                 {current.poetEng} · {current.year}
               </p>
               {current.translation && (
-                <motion.p
+                <motion.div
                   style={{ y: englishY }}
-                  className="font-body text-secondary-warm/65 text-[12px] mt-4 max-w-lg mx-auto leading-relaxed italic"
+                  className="mt-5 max-w-lg mx-auto"
                 >
-                  &ldquo;{current.translation}&rdquo;
-                </motion.p>
+                  <p className="font-etched text-[9px] tracking-[0.22em] uppercase text-gold/40 mb-2">
+                    ✦ English Meaning ✦
+                  </p>
+                  <p className="font-classical italic text-secondary-warm text-[13.5px] sm:text-[15px] leading-relaxed">
+                    &ldquo;{current.translation}&rdquo;
+                  </p>
+                </motion.div>
               )}
             </motion.div>
           </AnimatePresence>

@@ -37,6 +37,19 @@ function SherReveal({ lines, poet }: { lines: string[]; poet: string }) {
         }}
       />
 
+      {/* ink-drop ornament top-right */}
+      <motion.span
+        aria-hidden
+        className="absolute top-3 left-4 font-urdu text-gold/20 select-none"
+        style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+        initial={{ opacity: 0, scale: 0.6 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+      >
+        ؎
+      </motion.span>
+
       {/* sher lines */}
       <div className="mt-2 space-y-1">
         {allWords.map((words, li) => (
@@ -103,32 +116,40 @@ function EraCard({ era, index }: { era: Era; index: number }) {
         }}
       >
         {/* Header */}
-        <div className="flex items-baseline gap-4 flex-wrap">
+        <div className="flex items-start gap-4">
+          {/* Era number */}
           <span
-            className="font-display italic leading-none text-grad-gold opacity-70"
+            className="font-display italic leading-none text-grad-gold opacity-70 flex-shrink-0"
             style={{ fontSize: "clamp(38px, 5vw, 60px)" }}
           >
             {era.number}
           </span>
-          <div className="flex-1 min-w-0">
-            <h3
-              className="font-display text-foreground"
-              style={{ fontSize: "clamp(18px, 2.4vw, 26px)" }}
-            >
-              {era.name}
-            </h3>
+
+          {/* English left · Urdu right */}
+          <div className="flex-1 min-w-0 flex items-start justify-between gap-3">
+            {/* Left — English name + range */}
+            <div className="min-w-0">
+              <h3
+                className="font-display text-foreground"
+                style={{ fontSize: "clamp(18px, 2.4vw, 26px)" }}
+              >
+                {era.name}
+              </h3>
+              <span className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm">
+                {era.range}
+              </span>
+            </div>
+
+            {/* Right — Urdu name */}
             <p
-              className="font-urdu text-gold mt-1"
-              style={{ fontSize: "clamp(14px, 2vw, 20px)" }}
+              className="font-urdu text-gold text-right flex-shrink-0"
+              style={{ fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.9 }}
               dir="rtl"
               lang="ur"
             >
               {era.urdu}
             </p>
           </div>
-          <span className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm whitespace-nowrap">
-            {era.range}
-          </span>
         </div>
 
         {/* Description */}
@@ -282,63 +303,64 @@ export function SectionHeader({
   subtitle?: string;
 }) {
   return (
-    <div className="text-center">
-      {/* eyebrow */}
+    <div>
+      {/* eyebrow — centered */}
       <motion.p
         initial={{ opacity: 0, y: -6 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.55, ease: "easeOut" }}
-        className="font-etched text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-gold/50 mb-4"
+        className="font-etched text-[10px] sm:text-[11px] tracking-[0.38em] uppercase text-gold/50 mb-4 text-center"
       >
         {eyebrow}
       </motion.p>
 
-      {/* Urdu heading — single element blur reveal.
-          Do NOT split into child spans here: text-grad-gold uses
-          -webkit-text-fill-color:transparent which is inherited,
-          and background-clip:text does not propagate to child elements,
-          making any child spans invisible. */}
-      <motion.h2
-        initial={{ opacity: 0, filter: "blur(18px)", y: 22 }}
-        whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.85, ease: [0.22, 0.68, 0.2, 1] as [number,number,number,number], delay: 0.1 }}
-        dir="rtl"
-        lang="ur"
-        className="font-urdu text-grad-gold"
-        style={{ fontSize: "clamp(30px, 5.5vw, 62px)" }}
-      >
-        {urdu}
-      </motion.h2>
+      {/* Heading row: English on the left, Urdu on the right */}
+      <div className="flex items-center justify-between gap-6 flex-wrap">
+        {/* English title — left */}
+        <motion.h3
+          initial={{ opacity: 0, x: -18 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.65, ease: "easeOut", delay: 0.15 }}
+          className="font-display italic text-foreground/70 text-left"
+          style={{ fontSize: "clamp(18px, 2.6vw, 30px)" }}
+        >
+          {title}
+        </motion.h3>
 
-      {/* animated gold rule */}
+        {/* Urdu heading — right.
+            NOTE: Do NOT split into child spans; text-grad-gold uses
+            -webkit-text-fill-color:transparent which does not propagate
+            to child elements, making them invisible. */}
+        <motion.h2
+          initial={{ opacity: 0, filter: "blur(18px)", x: 18 }}
+          whileInView={{ opacity: 1, filter: "blur(0px)", x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.85, ease: [0.22, 0.68, 0.2, 1] as [number,number,number,number], delay: 0.1 }}
+          dir="rtl"
+          lang="ur"
+          className="font-urdu text-grad-gold text-right"
+          style={{ fontSize: "clamp(28px, 4.5vw, 54px)", lineHeight: 1.8 }}
+        >
+          {urdu}
+        </motion.h2>
+      </div>
+
+      {/* animated gold rule — full width */}
       <motion.div
         initial={{ scaleX: 0, opacity: 0 }}
         whileInView={{ scaleX: 1, opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] as [number,number,number,number], delay: 0.4 }}
-        className="mx-auto my-4"
+        className="my-4"
         style={{
-          transformOrigin: "center",
+          transformOrigin: "left",
           height: 1,
-          width: 80,
           background: "var(--grad-divider)",
           boxShadow: "0 0 10px rgb(var(--primary-rgb) / 0.35)",
         }}
       />
-
-      {/* English title */}
-      <motion.h3
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.55, ease: "easeOut", delay: 0.55 }}
-        className="font-display italic text-foreground/70"
-        style={{ fontSize: "clamp(16px, 2.2vw, 24px)" }}
-      >
-        {title}
-      </motion.h3>
 
       {/* optional description */}
       {subtitle && (
@@ -347,7 +369,7 @@ export function SectionHeader({
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="font-classical italic text-secondary-warm mt-3 max-w-xl mx-auto text-[13px] sm:text-[14.5px] leading-relaxed"
+          className="font-classical italic text-secondary-warm mt-1 max-w-xl mx-auto text-center text-[13px] sm:text-[14.5px] leading-relaxed"
         >
           {subtitle}
         </motion.p>

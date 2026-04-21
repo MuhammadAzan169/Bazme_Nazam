@@ -11,30 +11,52 @@ function PoetDetailModal({
   poet: Poet;
   onClose: () => void;
 }) {
-  // Lock scroll without position:fixed — no page-jump on close
+  // Lock body scroll while modal is open; restore on close/unmount
   useEffect(() => {
-    const htmlEl = document.documentElement;
-    const scrollbarGap = window.innerWidth - htmlEl.clientWidth;
-    htmlEl.style.overflow = "hidden";
-    document.body.style.paddingRight = `${scrollbarGap}px`;
+    const scrollY = window.scrollY;
+    const scrollbarW = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+    document.body.style.paddingRight = `${scrollbarW}px`;
     return () => {
-      htmlEl.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
       document.body.style.paddingRight = "";
+      window.scrollTo(0, scrollY);
     };
   }, []);
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+      className="fixed inset-0 z-[10000] flex items-center justify-center p-4 sm:p-8"
       onClick={onClose}
     >
       {/* Backdrop with blur */}
-      <div
-        className="absolute inset-0 bg-black/70"
-        style={{ backdropFilter: "blur(8px)" }}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        style={{
+          background: "rgba(4, 2, 12, 0.85)",
+          backdropFilter: "blur(24px) saturate(160%)",
+          WebkitBackdropFilter: "blur(24px) saturate(160%)",
+        }}
+        aria-hidden
       />
 
       {/* Content with fog entry */}
@@ -81,17 +103,22 @@ function PoetDetailModal({
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <p
-                className="font-urdu text-gold text-right leading-tight"
-                style={{ fontSize: "clamp(18px, 2.5vw, 26px)" }}
-                dir="rtl"
-                lang="ur"
-              >
-                {poet.nameUrdu}
-              </p>
-              <h2 className="font-display text-foreground mt-1 text-xl sm:text-2xl">
-                {poet.nameEng}
-              </h2>
+              {/* Heading row: English left · Urdu right */}
+              <div className="flex items-start justify-between gap-3">
+                {/* Left — English name */}
+                <h2 className="font-display text-foreground text-xl sm:text-2xl">
+                  {poet.nameEng}
+                </h2>
+                {/* Right — Urdu name */}
+                <p
+                  className="font-urdu text-gold text-right flex-shrink-0"
+                  style={{ fontSize: "clamp(18px, 2.5vw, 26px)", lineHeight: 2.0 }}
+                  dir="rtl"
+                  lang="ur"
+                >
+                  {poet.nameUrdu}
+                </p>
+              </div>
               <p className="font-etched text-[11px] tracking-[0.12em] text-tertiary-warm mt-1">
                 {poet.years} · {poet.era}
               </p>
@@ -296,17 +323,20 @@ function PoetCard({ poet, index }: { poet: Poet; index: number }) {
 
         {/* Body */}
         <div className="flex-1 p-4 sm:p-5">
-          <p
-            className="font-urdu text-gold text-right leading-tight"
-            style={{ fontSize: "clamp(16px, 1.8vw, 20px)" }}
-            dir="rtl"
-            lang="ur"
-          >
-            {poet.nameUrdu}
-          </p>
-          <h3 className="font-display text-foreground mt-1 text-[15px] sm:text-base">
-            {poet.nameEng}
-          </h3>
+          {/* Heading row: English left · Urdu right */}
+          <div className="flex items-start justify-between gap-3">
+            <h3 className="font-display text-foreground text-[15px] sm:text-base">
+              {poet.nameEng}
+            </h3>
+            <p
+              className="font-urdu text-gold text-right flex-shrink-0"
+              style={{ fontSize: "clamp(16px, 1.8vw, 20px)", lineHeight: 2.0 }}
+              dir="rtl"
+              lang="ur"
+            >
+              {poet.nameUrdu}
+            </p>
+          </div>
           <p className="font-etched text-[10px] tracking-[0.1em] text-tertiary-warm mt-0.5">
             {poet.years}
           </p>

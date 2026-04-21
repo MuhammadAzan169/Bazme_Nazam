@@ -166,6 +166,16 @@
     background: hsl(var(--bg-void));
   }
 
+  /* Urdu / Nastaliq — generous line-height prevents character clipping.
+     Inline styles and Tailwind utility classes will still override this. */
+  [lang="ur"] {
+    line-height: 2.2;
+    overflow: visible;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    text-align: right;
+  }
+
   /* Noise grain overlay */
   body::after {
     content: "";

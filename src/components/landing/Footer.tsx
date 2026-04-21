@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="relative mt-20 border-t border-gold/10 py-14 px-5 sm:px-12 text-center">
       <p
-        className="font-urdu text-gold/80 mx-auto"
+        className="font-urdu text-gold/80 mx-auto text-center"
         style={{ fontSize: "clamp(20px, 3vw, 28px)" }}
         dir="rtl"
         lang="ur"

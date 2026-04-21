@@ -13,15 +13,15 @@ function AsnafModal({ a, onClose }: { a: Asnaf; onClose: () => void }) {
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
 
-  // Lock scroll without position:fixed — no page-jump on close
+  // Lock scroll without moving the page — overflow on <html> preserves
+  // scrollY natively so there is no jump when the modal closes.
   useEffect(() => {
-    const htmlEl = document.documentElement;
-    const scrollbarGap = window.innerWidth - htmlEl.clientWidth;
-    htmlEl.style.overflow = "hidden";
-    document.body.style.paddingRight = `${scrollbarGap}px`;
+    const scrollbarW = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.paddingRight = `${scrollbarW}px`;
     return () => {
-      htmlEl.style.overflow = "";
-      document.body.style.paddingRight = "";
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.paddingRight = "";
     };
   }, []);
 
@@ -71,29 +71,33 @@ function AsnafModal({ a, onClose }: { a: Asnaf; onClose: () => void }) {
         />
 
         {/* ── Fixed Header ── */}
-        <div className="relative flex-none px-7 pt-6 pb-5">
-          {/* Row: English left — Urdu right — Close far-right */}
+        <div className="relative flex-none px-7 pt-7 pb-5">
+
+          {/* Title row: English left · Urdu right · Close far-right */}
           <div className="flex items-start justify-between gap-3">
-            {/* LEFT: English */}
-            <div className="flex-1 min-w-0">
-              <p className="font-etched text-[8px] tracking-[0.26em] uppercase text-gold/40 mb-2">
+
+            {/* LEFT — English name */}
+            <div className="flex flex-col min-w-0">
+              <p className="font-etched text-[8.5px] tracking-[0.28em] uppercase text-gold/45 mb-1">
                 ✦ Asnaf-e-Sukhan ✦
               </p>
-              <h2 className="font-display italic text-foreground/90 text-xl sm:text-[1.55rem] leading-snug tracking-tight">
+              <h2 className="font-display italic text-foreground/90 text-xl sm:text-[1.65rem] leading-snug tracking-tight">
                 {a.name}
               </h2>
             </div>
 
-            {/* RIGHT: Urdu + Close */}
+            {/* RIGHT — Urdu name + close button */}
             <div className="flex items-start gap-3 flex-shrink-0">
               <p
-                className="font-urdu text-grad-gold leading-none text-right"
-                style={{ fontSize: "clamp(34px, 4.5vw, 54px)" }}
+                className="font-urdu text-grad-gold text-right"
+                style={{ fontSize: "clamp(28px, 4vw, 52px)", lineHeight: 1.7 }}
                 dir="rtl"
                 lang="ur"
               >
                 {a.urdu}
               </p>
+
+              {/* Close */}
               <button
                 onClick={onClose}
                 aria-label="Close"
@@ -224,6 +228,20 @@ function AsnafModal({ a, onClose }: { a: Asnaf; onClose: () => void }) {
                 }}
                 dir="rtl"
               >
+                {/* Decorative ؎ glyph */}
+                <span
+                  aria-hidden
+                  className="absolute bottom-1 left-4 font-urdu select-none pointer-events-none leading-none"
+                  style={{ fontSize: 72, color: "rgb(var(--primary-rgb)/0.055)" }}
+                >
+                  ؎
+                </span>
+                {/* Bottom shimmer */}
+                <div
+                  aria-hidden
+                  className="absolute bottom-0 left-0 right-0 h-px"
+                  style={{ background: "linear-gradient(90deg, transparent, rgb(var(--primary-rgb)/0.22), transparent)" }}
+                />
                 <div className="relative z-10">
                   {a.exampleSher.map((line, i) => (
                     <p
@@ -265,17 +283,20 @@ function AsnafCard({ a, index, onClick }: { a: Asnaf; index: number; onClick: ()
       aria-label={`${a.name} — ${a.urdu}`}
     >
       <div className="p-5 sm:p-7">
-        <p
-          className="font-urdu text-gold leading-none"
-          style={{ fontSize: "clamp(32px, 4.5vw, 48px)" }}
-          dir="rtl"
-          lang="ur"
-        >
-          {a.urdu}
-        </p>
-        <h3 className="font-display italic text-foreground mt-2 text-lg sm:text-xl">
-          {a.name}
-        </h3>
+        {/* Heading row: English left · Urdu right */}
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-display italic text-foreground text-lg sm:text-xl">
+            {a.name}
+          </h3>
+          <p
+            className="font-urdu text-gold text-right flex-shrink-0"
+            style={{ fontSize: "clamp(24px, 3.5vw, 40px)", lineHeight: 1.8 }}
+            dir="rtl"
+            lang="ur"
+          >
+            {a.urdu}
+          </p>
+        </div>
         <hr className="divider-gold my-3 w-10 border-0 mx-0" />
         <p className="font-body text-secondary-warm text-[12px] sm:text-[13px] leading-relaxed">
           {a.description}

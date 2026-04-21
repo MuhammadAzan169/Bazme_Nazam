@@ -55,17 +55,20 @@ function BookCard({ book, index }: { book: Book; index: number }) {
               </span>
             </div>
             <div className="text-center">
-              <p
-                className="font-urdu text-gold/90 leading-snug"
-                style={{ fontSize: "clamp(16px, 2.2vw, 20px)" }}
-                dir="rtl"
-                lang="ur"
-              >
-                {book.titleUrdu}
-              </p>
-              <p className="font-display italic text-foreground/60 text-[11px] mt-1 leading-tight">
-                {book.title}
-              </p>
+              {/* Heading row: English left · Urdu right */}
+              <div className="flex items-center justify-center gap-2">
+                <p className="font-display italic text-foreground/60 text-[11px] leading-tight">
+                  {book.title}
+                </p>
+                <p
+                  className="font-urdu text-gold/90"
+                  style={{ fontSize: "clamp(16px, 2.2vw, 20px)", lineHeight: 2.0 }}
+                  dir="rtl"
+                  lang="ur"
+                >
+                  {book.titleUrdu}
+                </p>
+              </div>
             </div>
             <div className="border-t border-gold/20 pt-2">
               <p className="font-classical italic text-secondary-warm text-[10px]">{book.author}</p>
@@ -103,17 +106,20 @@ function BookCard({ book, index }: { book: Book; index: number }) {
           </motion.div>
         </div>
 
-        <h3 className="font-display italic text-foreground mt-2 text-lg sm:text-xl">
-          {book.title}
-        </h3>
-        <p
-          className="font-urdu text-gold text-right mt-1"
-          style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
-          dir="rtl"
-          lang="ur"
-        >
-          {book.titleUrdu}
-        </p>
+        {/* Heading row: English left · Urdu right */}
+        <div className="flex items-start justify-between gap-3 mt-2">
+          <h3 className="font-display italic text-foreground text-lg sm:text-xl">
+            {book.title}
+          </h3>
+          <p
+            className="font-urdu text-gold text-right flex-shrink-0"
+            style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+            dir="rtl"
+            lang="ur"
+          >
+            {book.titleUrdu}
+          </p>
+        </div>
 
         <p className="font-classical italic text-secondary-warm text-[13px] mt-1">
           by {book.author}
