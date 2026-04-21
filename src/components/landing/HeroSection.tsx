@@ -81,18 +81,38 @@ export default function HeroSection() {
           The Gathering of Words
         </motion.h1>
 
-        {/* English title */}
-        <motion.p
+        {/* Brand logo lockup */}
+        <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
-          className="font-display italic text-grad-gold mt-2 flex items-center justify-center gap-2"
-          style={{ fontSize: "clamp(20px, 3.5vw, 36px)" }}
+          className="mt-4 flex flex-col items-center gap-1"
         >
-          <span>Bazm-e-Sukhan</span>
-          <span>-</span>
-          <span className="font-display" dir="rtl" lang="ur">بزمِ سخن</span>
-        </motion.p>
+          {/* Urdu name — primary, large */}
+          <p
+            className="font-urdu text-grad-gold"
+            dir="rtl"
+            lang="ur"
+            style={{ fontSize: "clamp(32px, 5.5vw, 64px)", lineHeight: 2.2 }}
+          >
+            بزمِ سخن
+          </p>
+
+          {/* Ornamental rule */}
+          <div className="flex items-center gap-3 w-full max-w-[260px]">
+            <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, hsl(var(--gold-main)/0.6))" }} />
+            <span className="font-etched text-gold/50 text-[10px] tracking-[0.3em]">✦</span>
+            <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, hsl(var(--gold-main)/0.6))" }} />
+          </div>
+
+          {/* English name — secondary, small-caps */}
+          <p
+            className="font-etched tracking-[0.4em] uppercase text-gold/70"
+            style={{ fontSize: "clamp(11px, 1.4vw, 15px)" }}
+          >
+            Bazm-e-Sukhan
+          </p>
+        </motion.div>
 
         {/* Tagline + typewriter */}
         <motion.div

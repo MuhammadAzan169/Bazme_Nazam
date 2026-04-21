@@ -57,17 +57,18 @@ export default function Navbar({ variant = "landing" }: Props) {
           {/* Logo */}
           <button
             onClick={() => navigate("/")}
-            className="flex items-baseline gap-2 text-left"
+            className="flex flex-col items-start leading-none text-left group"
             aria-label="Bazm-e-Sukhan home"
           >
             <span
-              className="font-urdu text-xl sm:text-2xl text-gold leading-none"
+              className="font-urdu text-grad-gold group-hover:opacity-90 transition-opacity"
               lang="ur"
               dir="rtl"
+              style={{ fontSize: "clamp(20px, 2.2vw, 26px)", lineHeight: 2.2 }}
             >
               بزمِ سخن
             </span>
-            <span className="hidden sm:inline-block font-etched text-[10px] tracking-[0.22em] text-secondary-warm uppercase">
+            <span className="font-etched text-[9px] tracking-[0.3em] text-gold/50 uppercase -mt-1">
               Bazm-e-Sukhan
             </span>
           </button>
