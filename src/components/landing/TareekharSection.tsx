@@ -154,6 +154,7 @@ function EraCard({ era, index }: { era: Era; index: number }) {
 
         {/* Description */}
         <p
+          dir="ltr"
           className="font-body text-secondary-warm mt-5 leading-[1.9]"
           style={{ fontSize: "clamp(13px, 1.4vw, 15px)" }}
         >
@@ -199,7 +200,7 @@ function EraCard({ era, index }: { era: Era; index: number }) {
             >
               <div className="mt-4 space-y-5">
                 {/* Historical Fact */}
-                <p className="font-classical italic text-secondary-warm text-sm leading-relaxed">
+                <p dir="ltr" className="font-classical italic text-secondary-warm text-sm leading-relaxed">
                   {era.historicalFact}
                 </p>
 
@@ -222,7 +223,7 @@ function EraCard({ era, index }: { era: Era; index: number }) {
                           className="relative"
                         >
                           <div className="absolute -left-[11px] top-1.5 h-2 w-2 rounded-full bg-gold/40" />
-                          <p className="font-body text-secondary-warm text-[12px] leading-relaxed pl-2">
+                          <p dir="ltr" className="font-body text-secondary-warm text-[12px] leading-relaxed pl-2">
                             {event}
                           </p>
                         </motion.div>

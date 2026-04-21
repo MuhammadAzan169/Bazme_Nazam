@@ -126,7 +126,7 @@ function BookCard({ book, index }: { book: Book; index: number }) {
           <span className="text-tertiary-warm"> · {book.authorUrdu}</span>
         </p>
 
-        <p className="font-body text-secondary-warm mt-3 text-[12.5px] leading-[1.7]">
+        <p className="font-body text-secondary-warm mt-3 text-[12.5px] leading-[1.7] text-left">
           {book.description}
         </p>
 
@@ -162,7 +162,7 @@ function BookCard({ book, index }: { book: Book; index: number }) {
                         Synopsis
                       </span>
                     </div>
-                    <p className="font-body text-secondary-warm text-[12.5px] leading-[1.8]">
+                    <p className="font-body text-secondary-warm text-[12.5px] leading-[1.8] text-left">
                       {book.detailedSynopsis}
                     </p>
                   </div>
@@ -175,7 +175,7 @@ function BookCard({ book, index }: { book: Book; index: number }) {
                         Why Read This
                       </span>
                     </div>
-                    <p className="font-classical italic text-secondary-warm text-[12.5px] leading-relaxed">
+                    <p className="font-classical italic text-secondary-warm text-[12.5px] leading-relaxed text-left">
                       {book.whyRead}
                     </p>
                   </div>

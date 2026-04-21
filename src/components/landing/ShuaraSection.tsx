@@ -11,22 +11,15 @@ function PoetDetailModal({
   poet: Poet;
   onClose: () => void;
 }) {
-  // Lock body scroll while modal is open; restore on close/unmount
+  // Lock scroll without moving the page — overflow on <html> preserves
+  // scrollY natively so there is no jump when the modal closes.
   useEffect(() => {
-    const scrollY = window.scrollY;
     const scrollbarW = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
-    document.body.style.paddingRight = `${scrollbarW}px`;
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.paddingRight = `${scrollbarW}px`;
     return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.paddingRight = "";
-      window.scrollTo(0, scrollY);
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.paddingRight = "";
     };
   }, []);
 
@@ -129,7 +122,7 @@ function PoetDetailModal({
         <div className="p-6 sm:p-8 pt-4 space-y-6">
           {/* Full bio */}
           <div>
-            <p className="font-body text-secondary-warm text-[13.5px] leading-[1.9]">
+            <p className="font-body text-secondary-warm text-[13.5px] leading-[1.9] text-left">
               {poet.fullBio}
             </p>
           </div>
@@ -140,7 +133,7 @@ function PoetDetailModal({
               <span className="font-etched text-[10px] tracking-[0.16em] uppercase text-gold/80 block mb-2">
                 Style
               </span>
-              <p className="font-body text-secondary-warm text-[12.5px] leading-relaxed">
+              <p className="font-body text-secondary-warm text-[12.5px] leading-relaxed text-left">
                 {poet.style}
               </p>
             </div>
@@ -148,7 +141,7 @@ function PoetDetailModal({
               <span className="font-etched text-[10px] tracking-[0.16em] uppercase text-gold/80 block mb-2">
                 Legacy
               </span>
-              <p className="font-body text-secondary-warm text-[12.5px] leading-relaxed">
+              <p className="font-body text-secondary-warm text-[12.5px] leading-relaxed text-left">
                 {poet.legacy}
               </p>
             </div>
@@ -184,7 +177,7 @@ function PoetDetailModal({
                           ({work.year})
                         </span>
                       </div>
-                      <p className="font-body text-secondary-warm text-[12px] leading-relaxed mt-1">
+                      <p className="font-body text-secondary-warm text-[12px] leading-relaxed mt-1 text-left">
                         {work.description}
                       </p>
                     </div>
@@ -341,7 +334,7 @@ function PoetCard({ poet, index }: { poet: Poet; index: number }) {
             {poet.years}
           </p>
 
-          <p className="font-body text-secondary-warm mt-3 text-[12px] sm:text-[13px] leading-[1.7]">
+          <p className="font-body text-secondary-warm mt-3 text-[12px] sm:text-[13px] leading-[1.7] text-left">
             {poet.bio}
           </p>
 

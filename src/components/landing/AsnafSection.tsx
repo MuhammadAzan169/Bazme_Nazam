@@ -128,14 +128,14 @@ function AsnafModal({ a, onClose }: { a: Asnaf; onClose: () => void }) {
           onTouchMove={(e) => e.stopPropagation()}
         >
           {/* Main description */}
-          <p className="font-body text-secondary-warm text-[13.5px] leading-[1.95]">
+          <p dir="ltr" className="font-body text-secondary-warm text-[13.5px] leading-[1.95]">
             {a.description}
           </p>
 
           {/* Detailed description */}
           {a.detailedDescription && (
             <div className="mt-4 pl-4 border-l-2 border-gold/15">
-              <p className="font-classical italic text-secondary-warm/65 text-[12.5px] sm:text-[13px] leading-[2]">
+              <p dir="ltr" className="font-classical italic text-secondary-warm/65 text-[12.5px] sm:text-[13px] leading-[2]">
                 {a.detailedDescription}
               </p>
             </div>
@@ -166,7 +166,7 @@ function AsnafModal({ a, onClose }: { a: Asnaf; onClose: () => void }) {
                     >
                       {i + 1}
                     </span>
-                    <span className="font-body text-secondary-warm text-[12.5px] leading-relaxed">
+                    <span dir="ltr" className="font-body text-secondary-warm text-[12.5px] leading-relaxed">
                       {rule}
                     </span>
                   </motion.li>
@@ -298,7 +298,7 @@ function AsnafCard({ a, index, onClick }: { a: Asnaf; index: number; onClick: ()
           </p>
         </div>
         <hr className="divider-gold my-3 w-10 border-0 mx-0" />
-        <p className="font-body text-secondary-warm text-[12px] sm:text-[13px] leading-relaxed">
+        <p dir="ltr" className="font-body text-secondary-warm text-[12px] sm:text-[13px] leading-relaxed">
           {a.description}
         </p>
 
