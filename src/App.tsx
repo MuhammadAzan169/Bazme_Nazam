@@ -10,7 +10,6 @@ import { useMoodTheme } from "@/hooks/useMoodTheme";
 import CustomCursor from "@/components/shared/CustomCursor";
 import SmoothScroll from "@/components/shared/SmoothScroll";
 import ScrollToTop from "@/components/shared/ScrollToTop";
-import LoadCurtain from "@/components/shared/LoadCurtain";
 import { useInkSplash } from "@/hooks/useInkSplash";
 
 const ChatbotPage = lazy(() => import("./pages/ChatbotPage"));
@@ -45,12 +44,7 @@ function MobileAwareCursor() {
 
 const ChatbotFallback = () => (
   <div className="flex items-center justify-center min-h-screen">
-    <span
-      className="font-urdu text-gold text-2xl animate-pulse"
-      dir="rtl"
-    >
-      بزمِ سخن
-    </span>
+    <div className="animate-pulse text-gold">Loading...</div>
   </div>
 );
 
@@ -61,7 +55,6 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <MoodThemeBridge>
-          <LoadCurtain />
           <InkCanvas />
           <SmoothScroll>
             <ScrollToTop />
