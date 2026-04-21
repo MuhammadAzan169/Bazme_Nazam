@@ -116,39 +116,46 @@ function EraCard({ era, index }: { era: Era; index: number }) {
         }}
       >
         {/* Header */}
-        <div className="flex items-start gap-4">
-          {/* Era number */}
-          <span
-            className="font-display italic leading-none text-grad-gold opacity-70 flex-shrink-0"
-            style={{ fontSize: "clamp(38px, 5vw, 60px)" }}
-          >
-            {era.number}
-          </span>
+        <div className="flex flex-col items-center gap-3">
+          {/* Center top — Range */}
+          <div className="text-center">
+            <span className="font-etched text-[14px] tracking-[0.2em] uppercase text-gold bg-gold/[0.12] px-4 py-2 rounded-full border border-gold/25 shadow-sm">
+              {era.range}
+            </span>
+          </div>
 
-          {/* English left · Urdu right */}
-          <div className="flex-1 min-w-0 flex items-start justify-between gap-3">
-            {/* Left — English name + range */}
-            <div className="min-w-0">
-              <h3
-                className="font-display text-foreground"
-                style={{ fontSize: "clamp(18px, 2.4vw, 26px)" }}
-              >
-                {era.name}
-              </h3>
-              <span className="font-etched text-[10px] tracking-[0.16em] uppercase text-tertiary-warm">
-                {era.range}
-              </span>
-            </div>
-
-            {/* Right — Urdu name */}
-            <p
-              className="font-urdu text-gold text-right flex-shrink-0"
-              style={{ fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.9 }}
-              dir="rtl"
-              lang="ur"
+          {/* Era number + English left · Urdu right */}
+          <div className="flex items-start gap-4 w-full">
+            {/* Era number */}
+            <span
+              className="font-display italic leading-none text-grad-gold opacity-70 flex-shrink-0"
+              style={{ fontSize: "clamp(38px, 5vw, 60px)" }}
             >
-              {era.urdu}
-            </p>
+              {era.number}
+            </span>
+
+            {/* English left · Urdu right */}
+            <div className="flex-1 min-w-0 flex items-start justify-between gap-3">
+              {/* Left — English name */}
+              <div className="min-w-0">
+                <h3
+                  className="font-display text-foreground"
+                  style={{ fontSize: "clamp(18px, 2.4vw, 26px)" }}
+                >
+                  {era.name}
+                </h3>
+              </div>
+
+              {/* Right — Urdu name */}
+              <p
+                className="font-urdu text-gold text-right flex-shrink-0"
+                style={{ fontSize: "clamp(16px, 2.2vw, 26px)", lineHeight: 1.9 }}
+                dir="rtl"
+                lang="ur"
+              >
+                {era.urdu}
+              </p>
+            </div>
           </div>
         </div>
 
